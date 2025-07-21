@@ -1,0 +1,26 @@
+.listado-container {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+li:last-child {
+  border-bottom: none;
+}
