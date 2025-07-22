@@ -1,6 +1,6 @@
 ﻿namespace BusApi.Models
 {
-    public class BusResponse
+    public class BusListResponse
     {
         public int Id { get; set; }
         public string RegistrationPlate { get; set; }

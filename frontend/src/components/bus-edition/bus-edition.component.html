@@ -1,0 +1,31 @@
+<div *ngIf="bus">
+  <form [formGroup]="form" style="width: 300px">
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Chofer</mat-label>
+      <mat-select formControlName="driverId">
+        <mat-option *ngFor="let d of drivers" [value]="d.id">
+          {{ d.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Patente</mat-label>
+      <input
+        matInput
+        formControlName="registrationPlate"
+        [readonly]="isEdition"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Chicos</mat-label>
+      <mat-select formControlName="childrenIds" multiple>
+        <mat-option *ngFor="let child of children" [value]="child.id">
+          {{ child.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div *ngIf="!bus">Cargando...</div>

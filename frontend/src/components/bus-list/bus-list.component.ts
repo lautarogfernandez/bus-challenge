@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { BusService } from '../../services/bus.service';
-import { BusResponse } from '../../models/BusResponse';
+import { BusListResponse } from '../../models/BusListResponse';
 
 @Component({
   selector: 'bus-list',
@@ -30,7 +30,7 @@ export class BusListComponent {
     'driver',
   ];
 
-  buses: BusResponse[] = [];
+  buses: BusListResponse[] = [];
 
   dataSource = [
     { id: 1, registrationPlate: 'AA123ZZ', children: 2, driver: 'Hector' },
