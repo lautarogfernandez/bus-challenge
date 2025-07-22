@@ -1,8 +1,14 @@
+using BusApi.Data;
+using BusApi.Extensions;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddDbContext<BusContext>(option => option.UseSqlite(builder.Configuration.GetConnectionString("sqlite")));
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -19,6 +25,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.MigrateDatabase();
 
 if (app.Environment.IsDevelopment())
 {

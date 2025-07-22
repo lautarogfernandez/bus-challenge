@@ -1,0 +1,15 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BusApi.Domain
+{
+    public class Bus
+    {
+        public Guid Id { get; set; }
+        [Required]
+        [MaxLength(10)]
+        public string RegistrationPlate { get; set; }
+        [Required]
+        public Driver Driver { get; set; }
+        public IEnumerable<Kid>? Kids { get; set; }
+    }
+}
