@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { BusService } from '../../services/bus.service';
+import { BusResponse } from '../../models/BusResponse';
 
 @Component({
   selector: 'bus-list',
@@ -12,12 +14,23 @@ import { MatTableModule } from '@angular/material/table';
   styleUrls: ['./bus-list.component.css'],
 })
 export class BusListComponent {
+  constructor(private busService: BusService) {}
+
+  ngOnInit(): void {
+    this.busService.getBuses().subscribe({
+      next: (data) => (this.buses = data),
+      error: (err) => console.error(err),
+    });
+  }
+
   displayedColumns: string[] = [
     'actions',
     'registrationPlate',
     'children',
     'driver',
   ];
+
+  buses: BusResponse[] = [];
 
   dataSource = [
     { id: 1, registrationPlate: 'AA123ZZ', children: 2, driver: 'Hector' },
