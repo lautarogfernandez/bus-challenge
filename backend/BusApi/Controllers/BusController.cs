@@ -12,7 +12,7 @@ namespace BusApi.Controllers
         private static readonly BusResponse[] InitialBuses =
         [
             new BusResponse { Id= 1, RegistrationPlate= "AA123ZZ", ChildrenIds= [1111,1112,1113], DriverId=100 },
-            new BusResponse { Id= 2, RegistrationPlate= "BB355II", ChildrenIds= [111,1114], DriverId=100 },
+            new BusResponse { Id= 2, RegistrationPlate= "BB355II", ChildrenIds= [1111,1114], DriverId=100 },
             new BusResponse { Id= 3, RegistrationPlate= "AA874MN", ChildrenIds= [], DriverId=102 },
             new BusResponse { Id= 4, RegistrationPlate= "SD109PI", ChildrenIds= [1115, 1116, 1117, 1118, 1119], DriverId=101 }
         ];
