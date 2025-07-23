@@ -10,6 +10,11 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<BusContext>(option => option.UseSqlite(builder.Configuration.GetConnectionString("sqlite")));
 
+builder.Services.AddMediatR(configuration =>
+{
+    configuration.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+});
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options =>

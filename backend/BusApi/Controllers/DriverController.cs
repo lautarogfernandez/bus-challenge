@@ -1,6 +1,8 @@
 using BusApi.Data;
 using BusApi.Domain;
+using BusApi.Feature.Drivers.Command;
 using BusApi.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +14,13 @@ namespace BusApi.Controllers
     {
         private readonly ILogger<DriverController> _logger;
         private readonly BusContext _busContext;
+        private readonly ISender _sender;
 
-        public DriverController(BusContext busContext, ILogger<DriverController> logger)
+        public DriverController(BusContext busContext, ILogger<DriverController> logger, ISender sender)
         {
             _logger = logger;
             _busContext = busContext;
+            _sender = sender;
         }
 
         [HttpGet]
@@ -38,11 +42,10 @@ namespace BusApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Driver driver)
+        public async Task<IActionResult> Create(CreateDriverCommand command)
         {
-            _busContext.Drivers.Add(driver);
-            await _busContext.SaveChangesAsync();
-            return Created(string.Empty, driver.Id);
+            var driverId = await _sender.Send(command);
+            return Created(string.Empty, driverId);
         }
     }
 }
