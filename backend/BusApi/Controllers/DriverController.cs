@@ -37,5 +37,12 @@ namespace BusApi.Controllers
             var driverId = await _sender.Send(command);
             return Created(string.Empty, driverId);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _sender.Send(new DeleteDriverCommand(id));
+            return Ok();
+        }
     }
 }
