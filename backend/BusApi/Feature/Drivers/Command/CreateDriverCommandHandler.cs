@@ -15,9 +15,8 @@ namespace BusApi.Feature.Drivers.Command
 
         public async Task<Guid> Handle(CreateDriverCommand request, CancellationToken cancellationToken)
         {
-            var busesIds = request.BusesIds ?? [];
-            var buses = _context.Buses.Where(x => busesIds.Contains(x.Id)).ToList();
-            var driver = new Driver { DocumentNumber = request.DocumentNumber, Name = request.Name, Buses = buses };
+            var bus = await _context.Buses.FindAsync(request.BusId);
+            var driver = new Driver { DocumentNumber = request.DocumentNumber, Name = request.Name, Bus = bus };
 
             _context.Drivers.Add(driver);
             await _context.SaveChangesAsync(cancellationToken);

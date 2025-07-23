@@ -10,6 +10,7 @@ namespace BusApi.Domain
         public string RegistrationPlate { get; set; }
         [Required]
         public Driver Driver { get; set; }
+        public Guid DriverId { get; set; }
         public IEnumerable<Kid>? Kids { get; set; }
     }
 }
