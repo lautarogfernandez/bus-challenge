@@ -25,12 +25,7 @@ export class BusListComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
-    this.busService.getBuses().subscribe({
-      next: (data) => (this.buses = data),
-      error: (err) => console.error(err),
-    });
-  }
+  buses: BusListResponse[] = [];
 
   displayedColumns: string[] = [
     'actions',
@@ -39,14 +34,19 @@ export class BusListComponent {
     'driverDocumentNumber',
   ];
 
-  buses: BusListResponse[] = [];
+  ngOnInit(): void {
+    this.busService.getBuses().subscribe({
+      next: (data) => (this.buses = data),
+      error: (err) => console.error(err),
+    });
+  }
 
   onAdd() {
-    this.router.navigate(['/bus', 0]);
+    this.router.navigate(['/buses', 0]);
   }
 
   onEdit(row: BusListResponse) {
-    this.router.navigate(['/bus', row.id]);
+    this.router.navigate(['/buses', row.id]);
   }
 
   onDelete(row: BusListResponse) {

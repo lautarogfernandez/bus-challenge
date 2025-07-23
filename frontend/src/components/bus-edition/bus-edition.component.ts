@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { BusService } from '../../services/bus.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BusResponse } from '../../models/BusResponse';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { DriverService } from '../../services/driver.service';
+import { KidService } from '../../services/kid.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'bus-edition',
@@ -25,48 +28,46 @@ export class BusEditionComponent {
   bus?: BusResponse;
   isEdition = true;
   drivers: any[] = [];
+  kids: any[] = [];
 
-  children: any[] = [
-    { id: 1111, name: 'Juancito' },
-    { id: 1112, name: 'Agustin' },
-    { id: 1113, name: 'Felipe' },
-    { id: 1114, name: 'Juana' },
-    { id: 1115, name: 'María' },
-    { id: 1116, name: 'Federico' },
-    { id: 1117, name: 'Natalia' },
-    { id: 1118, name: 'Santiago' },
-    { id: 1119, name: 'Bianca' },
-  ];
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private busService: BusService,
+    private driverService: DriverService,
+    private kidService: KidService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
-  constructor(private route: ActivatedRoute, private busService: BusService) {}
-
-  driverControl = new FormControl(0);
+  driverControl = new FormControl('');
   registrationPlateControl = new FormControl('');
-  childrenControl = new FormControl([] as number[]);
+  kidsControl = new FormControl([] as string[]);
 
   form = new FormGroup({
     driverId: this.driverControl,
     registrationPlate: this.registrationPlateControl,
-    childrenIds: this.childrenControl,
+    kidIds: this.kidsControl,
   });
 
   ngOnInit() {
     this.getDrivers();
+    this.getKids();
 
-    const id = this.route.snapshot.paramMap.get('id') || '';
-    this.getBusData(+id);
+    const id = this.activatedRoute.snapshot.paramMap.get('id') || '';
+
+    this.getBusData(id);
   }
 
-  getBusData(id: number) {
-    if (id) {
-      this.busService.getBusById(+id).subscribe({
+  private getBusData(id: string) {
+    if (id && id != '0') {
+      this.busService.getBusById(id).subscribe({
         next: (data) => {
           this.bus = data;
 
           this.form.patchValue({
             driverId: data.driverId,
             registrationPlate: data.registrationPlate,
-            childrenIds: data.childrenIds,
+            kidIds: data.kidIds,
           });
         },
         error: (err) => {
@@ -76,19 +77,63 @@ export class BusEditionComponent {
       });
     } else {
       this.isEdition = false;
-      this.bus = { id: 0, childrenIds: [], driverId: 0, registrationPlate: '' };
+      this.bus = { id: '', registrationPlate: '', driverId: '', kidIds: [] };
     }
   }
 
-  save() {
-    console.log('on Save', this.bus);
+  onSave() {
+    if (this.isEdition) {
+    } else {
+      const formData = this.form.value;
+
+      const data: BusResponse = {
+        id: this.bus?.id ?? '',
+        driverId: formData.driverId ?? '',
+        registrationPlate: formData.registrationPlate ?? '',
+        kidIds: formData.kidIds ?? [],
+      };
+
+      this.busService.createBus(data).subscribe({
+        next: (data) => {
+          this.snackBar.open('Micro creado con éxito', 'Cerrar', {
+            duration: 3000,
+          });
+
+          this.router.navigate(['/buses']);
+        },
+        error: (err) => {
+          this.snackBar.open('Error al intentar crear el Micro', 'Cerrar', {
+            duration: 3000,
+          }),
+            console.error(err);
+        },
+      });
+    }
   }
 
-  getDrivers() {
-    this.drivers = [
-      { id: 100, name: 'Héctor' },
-      { id: 101, name: 'José' },
-      { id: 102, name: 'Juan' },
-    ];
+  onCancel() {
+    this.router.navigate(['/buses']);
+  }
+
+  private getDrivers() {
+    this.driverService.getDrivers().subscribe({
+      next: (data) => {
+        this.drivers = data;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
+
+  private getKids() {
+    this.kidService.getKids().subscribe({
+      next: (data) => {
+        this.kids = data;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 }

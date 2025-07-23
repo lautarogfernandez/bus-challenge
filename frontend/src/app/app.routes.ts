@@ -9,6 +9,6 @@ export const routes: Routes = [
     path: 'buses',
     component: BusListComponent,
   },
-  { path: 'bus/:id', component: BusEditionComponent },
+  { path: 'buses/:id', component: BusEditionComponent },
   { path: '**', component: MenuAppComponent },
 ];

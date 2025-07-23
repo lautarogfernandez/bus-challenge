@@ -1,9 +1,9 @@
-﻿using BusApi.Domain;
+﻿using BusApi.Models;
 using MediatR;
 
 namespace BusApi.Feature.Buses.Queries
 {
-    public record GetBusByIdQuery(Guid Id) : IRequest<Bus?>
+    public record GetBusByIdQuery(Guid Id) : IRequest<BusResponse?>
     {
     }
 }

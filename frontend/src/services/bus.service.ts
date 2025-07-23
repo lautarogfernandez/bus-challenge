@@ -16,8 +16,12 @@ export class BusService {
     return this.http.get<BusListResponse[]>(this.apiUrl);
   }
 
-  getBusById(id: number): Observable<BusResponse> {
+  getBusById(id: string): Observable<BusResponse> {
     return this.http.get<BusResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  createBus(bus: BusResponse): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}`, bus);
   }
 
   deleteBus(id: string): Observable<void> {
