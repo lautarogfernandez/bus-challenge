@@ -82,17 +82,36 @@ export class BusEditionComponent {
   }
 
   onSave() {
+    const formData = this.form.value;
+
+    const data: BusResponse = {
+      id: this.bus?.id ?? '',
+      driverId: formData.driverId ?? '',
+      registrationPlate: formData.registrationPlate ?? '',
+      kidIds: formData.kidIds ?? [],
+    };
+
     if (this.isEdition) {
+      this.busService.updateBus(data).subscribe({
+        next: (data) => {
+          this.snackBar.open('Micro actualizado con éxito', 'Cerrar', {
+            duration: 3000,
+          });
+
+          this.router.navigate(['/buses']);
+        },
+        error: (err) => {
+          this.snackBar.open(
+            'Error al intentar actualizar el Micro',
+            'Cerrar',
+            {
+              duration: 3000,
+            }
+          ),
+            console.error(err);
+        },
+      });
     } else {
-      const formData = this.form.value;
-
-      const data: BusResponse = {
-        id: this.bus?.id ?? '',
-        driverId: formData.driverId ?? '',
-        registrationPlate: formData.registrationPlate ?? '',
-        kidIds: formData.kidIds ?? [],
-      };
-
       this.busService.createBus(data).subscribe({
         next: (data) => {
           this.snackBar.open('Micro creado con éxito', 'Cerrar', {

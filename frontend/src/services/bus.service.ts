@@ -24,6 +24,10 @@ export class BusService {
     return this.http.post<void>(`${this.apiUrl}`, bus);
   }
 
+  updateBus(bus: BusResponse): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${bus.id}`, bus);
+  }
+
   deleteBus(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
