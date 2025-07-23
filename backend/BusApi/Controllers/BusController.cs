@@ -1,6 +1,9 @@
 using BusApi.Data;
 using BusApi.Domain;
+using BusApi.Feature.Buses.Commands;
+using BusApi.Feature.Buses.Queries;
 using BusApi.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,26 +13,28 @@ namespace BusApi.Controllers
     [Route("[controller]")]
     public class BusController : ControllerBase
     {
-        private readonly ILogger<BusController> _logger;
-        private readonly BusContext _busContext;
+        private readonly ISender _sender;
+        private readonly BusContext _context;
 
-        public BusController(BusContext busContext, ILogger<BusController> logger)
+        public BusController(BusContext busContext, ISender sender)
         {
-            _logger = logger;
-            _busContext = busContext;
+            _context = busContext;
+            _sender = sender;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var buses = await _busContext.Buses.ToListAsync();
+            var buses = await _sender.Send(new GetAllBusesQuery());
             return Ok(buses);
         }
+
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var bus = await _busContext.Buses.FindAsync(id);
+            var bus = await _context.Buses.FindAsync(id);
             if (bus == null)
             {
                 return NotFound($"Bus with Id {id} was not found");
@@ -40,8 +45,8 @@ namespace BusApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(BusDto busDto)
         {
-            var driver = await _busContext.Drivers.FindAsync(busDto.DriverId);
-            var kids = await _busContext.Kids.Where(k => busDto.KidIds.Contains(k.Id)).ToListAsync();
+            var driver = await _context.Drivers.FindAsync(busDto.DriverId);
+            var kids = await _context.Kids.Where(k => busDto.KidIds.Contains(k.Id)).ToListAsync();
 
             if (driver == null)
             {
@@ -55,9 +60,16 @@ namespace BusApi.Controllers
                 Kids = kids
             };
 
-            _busContext.Buses.Add(bus);
-            await _busContext.SaveChangesAsync();
+            _context.Buses.Add(bus);
+            await _context.SaveChangesAsync();
             return Created(string.Empty, bus.Id);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _sender.Send(new DeleteBusCommand(id));
+            return Ok();
         }
     }
 }

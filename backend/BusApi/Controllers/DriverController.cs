@@ -1,4 +1,4 @@
-using BusApi.Feature.Drivers.Command;
+using BusApi.Feature.Drivers.Commands;
 using BusApi.Feature.Drivers.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -2,7 +2,7 @@
 using BusApi.Domain;
 using MediatR;
 
-namespace BusApi.Feature.Drivers.Command
+namespace BusApi.Feature.Drivers.Commands
 {
     public class CreateDriverCommandHandler : IRequestHandler<CreateDriverCommand, Guid>
     {

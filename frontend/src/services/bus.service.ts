@@ -19,4 +19,8 @@ export class BusService {
   getBusById(id: number): Observable<BusResponse> {
     return this.http.get<BusResponse>(`${this.apiUrl}/${id}`);
   }
+
+  deleteBus(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

@@ -18,33 +18,34 @@ namespace BusApi.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Bus>().HasKey(x => x.Id);
+            modelBuilder.Entity<Bus>(entity =>
+            {
+                entity.HasKey(x => x.Id);
 
-            modelBuilder.Entity<Bus>()
-                .HasOne(b => b.Driver)
-                .WithOne(d => d.Bus)
-                .HasForeignKey<Bus>(b => b.DriverId)
-                .OnDelete(DeleteBehavior.Restrict);
+                entity.HasIndex(x => x.RegistrationPlate).IsUnique();
 
-            modelBuilder.Entity<Bus>()
-                .HasMany(b => b.Kids)
-                .WithMany(k => k.Buses);
+                entity.HasOne(x => x.Driver)
+                      .WithOne(d => d.Bus)
+                      .HasForeignKey<Bus>(x => x.DriverId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<Bus>()
-                .HasIndex(b => b.RegistrationPlate)
-                .IsUnique();
+            modelBuilder.Entity<Driver>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.HasIndex(x => x.DocumentNumber).IsUnique();
+            });
 
-            modelBuilder.Entity<Driver>().HasKey(x => x.Id);
+            modelBuilder.Entity<Kid>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.HasIndex(x => x.DocumentNumber).IsUnique();
 
-            modelBuilder.Entity<Driver>()
-                .HasIndex(b => b.DocumentNumber)
-                .IsUnique();
-
-            modelBuilder.Entity<Kid>().HasKey(x => x.Id);
-
-            modelBuilder.Entity<Kid>()
-                .HasIndex(b => b.DocumentNumber)
-                .IsUnique();
+                entity.HasOne(x => x.Bus)
+                      .WithMany(b => b.Kids)
+                      .HasForeignKey(x => x.BusId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
         }
     }
 }

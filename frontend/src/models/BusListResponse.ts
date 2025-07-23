@@ -1,6 +1,6 @@
 export interface BusListResponse {
-  Id: number;
-  RegistrationPlate: string;
-  Children: number;
-  Driver: string;
+  id: string;
+  registrationPlate: string;
+  kids: number;
+  driverDocumentNumber: string;
 }

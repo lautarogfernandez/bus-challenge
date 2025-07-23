@@ -2,9 +2,9 @@
 {
     public class BusListResponse
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string RegistrationPlate { get; set; }
-        public string Driver { get; set; }
-        public int Children { get; set; }
+        public string DriverDocumentNumber { get; set; }
+        public int Kids { get; set; }
     }
 }

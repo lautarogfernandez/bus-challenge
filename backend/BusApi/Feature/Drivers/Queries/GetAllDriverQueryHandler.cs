@@ -8,10 +8,7 @@ namespace BusApi.Feature.Drivers.Queries
     {
         private readonly BusContext _context;
 
-        public GetAllDriverQueryHandler(BusContext busContext)
-        {
-            _context = busContext;
-        }
+        public GetAllDriverQueryHandler(BusContext busContext) => _context = busContext;
 
         public async Task<IEnumerable<Driver>> Handle(GetAllDriverQuery request, CancellationToken cancellationToken)
         {

@@ -11,6 +11,6 @@ namespace BusApi.Domain
         [Required]
         public Driver Driver { get; set; }
         public Guid DriverId { get; set; }
-        public IEnumerable<Kid>? Kids { get; set; }
+        public List<Kid>? Kids { get; set; }
     }
 }
