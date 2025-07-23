@@ -94,11 +94,7 @@ export class BusEditionComponent {
     if (this.isEdition) {
       this.busService.updateBus(data).subscribe({
         next: (data) => {
-          this.snackBar.open('Micro actualizado con éxito', 'Cerrar', {
-            duration: 3000,
-          });
-
-          this.router.navigate(['/buses']);
+          this.handleSuccessOnSave('actualizado');
         },
         error: (err) => {
           this.snackBar.open(
@@ -113,21 +109,26 @@ export class BusEditionComponent {
       });
     } else {
       this.busService.createBus(data).subscribe({
-        next: (data) => {
-          this.snackBar.open('Micro creado con éxito', 'Cerrar', {
-            duration: 3000,
-          });
-
-          this.router.navigate(['/buses']);
-        },
-        error: (err) => {
-          this.snackBar.open('Error al intentar crear el Micro', 'Cerrar', {
-            duration: 3000,
-          }),
-            console.error(err);
-        },
+        next: (data) => this.handleSuccessOnSave('creado'),
+        error: (err) => this.handleErrorOnSave('creado', err),
       });
     }
+  }
+
+  private handleSuccessOnSave(action: string) {
+    this.snackBar.open(`Micro ${action} con éxito`, 'Cerrar', {
+      duration: 3000,
+    });
+
+    this.router.navigate(['/buses']);
+  }
+
+  private handleErrorOnSave(action: string, err: any) {
+    this.snackBar.open(`Error al intentar ${action} el Micro`, 'Cerrar', {
+      duration: 3000,
+    });
+
+    console.error(err);
   }
 
   onCancel() {
