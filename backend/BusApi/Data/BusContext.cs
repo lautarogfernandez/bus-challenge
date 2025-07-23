@@ -21,7 +21,6 @@ namespace BusApi.Data
             modelBuilder.Entity<Bus>(entity =>
             {
                 entity.HasKey(x => x.Id);
-
                 entity.HasIndex(x => x.RegistrationPlate).IsUnique();
 
                 entity.HasOne(x => x.Driver)

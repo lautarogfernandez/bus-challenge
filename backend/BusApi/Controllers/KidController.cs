@@ -1,7 +1,7 @@
-using BusApi.Data;
-using BusApi.Domain;
+using BusApi.Feature.Kids.Commands;
+using BusApi.Feature.Kids.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusApi.Controllers
 {
@@ -9,26 +9,21 @@ namespace BusApi.Controllers
     [Route("[controller]")]
     public class KidController : ControllerBase
     {
-        private readonly ILogger<KidController> _logger;
-        private readonly BusContext _busContext;
+        private readonly ISender _sender;
 
-        public KidController(BusContext busContext, ILogger<KidController> logger)
-        {
-            _logger = logger;
-            _busContext = busContext;
-        }
+        public KidController(ISender sender) => _sender = sender;
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var kids = await _busContext.Kids.ToListAsync();
+            var kids = await _sender.Send(new GetAllKidsQuery());
             return Ok(kids);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var kid = await _busContext.Kids.FindAsync(id);
+            var kid = await _sender.Send(new GetKidByIdQuery(id));
             if (kid == null)
             {
                 return NotFound($"Kid with Id {id} was not found");
@@ -37,11 +32,17 @@ namespace BusApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Kid kid)
+        public async Task<IActionResult> Create(CreateKidCommand command)
         {
-            _busContext.Kids.Add(kid);
-            await _busContext.SaveChangesAsync();
-            return Created(string.Empty, kid.Id);
+            var kidId = await _sender.Send(command);
+            return Created(string.Empty, kidId);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _sender.Send(new DeleteKidCommand(id));
+            return Ok();
         }
     }
 }
