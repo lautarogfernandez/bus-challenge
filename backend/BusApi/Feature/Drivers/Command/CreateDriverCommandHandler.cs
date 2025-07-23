@@ -19,7 +19,7 @@ namespace BusApi.Feature.Drivers.Command
             var buses = _context.Buses.Where(x => busesIds.Contains(x.Id)).ToList();
             var driver = new Driver { DocumentNumber = request.DocumentNumber, Name = request.Name, Buses = buses };
 
-            _context.Add(driver);
+            _context.Drivers.Add(driver);
             await _context.SaveChangesAsync(cancellationToken);
 
             return driver.Id;
