@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { KidListResponse } from '../models/KidListResponse';
 import { KidResponse } from '../models/KidResponse';
+import { KidListResponse } from '../models/KidListResponse';
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
 export interface KidListResponse {
   id: string;
   name: string;
-  registrationPlate: string;
+  documentNumber: string;
   busRegistrationPlate: string;
 }
