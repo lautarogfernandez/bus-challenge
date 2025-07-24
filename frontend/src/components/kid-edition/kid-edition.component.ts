@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DriverUpdate } from '../../models/DriverUpdate';
 import { KidService } from '../../services/kid.service';
 import { KidListResponse } from '../../models/KidListResponse';
+import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
 
 @Component({
   selector: 'kid-edition',
@@ -19,6 +20,7 @@ import { KidListResponse } from '../../models/KidListResponse';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    FormButtonsComponent,
   ],
   templateUrl: './kid-edition.component.html',
   styleUrls: ['./kid-edition.component.css'],

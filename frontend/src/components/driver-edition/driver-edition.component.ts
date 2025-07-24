@@ -9,6 +9,7 @@ import { DriverService } from '../../services/driver.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DriverUpdate } from '../../models/DriverUpdate';
 import { DriverListResponse } from '../../models/DriverListResponse';
+import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
 
 @Component({
   selector: 'driver-edition',
@@ -19,6 +20,7 @@ import { DriverListResponse } from '../../models/DriverListResponse';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    FormButtonsComponent,
   ],
   templateUrl: './driver-edition.component.html',
   styleUrls: ['./driver-edition.component.css'],
@@ -126,6 +128,6 @@ export class DriverEditionComponent {
   }
 
   onCancel() {
-    this.router.navigate(['/driver']);
+    this.router.navigate(['/drivers']);
   }
 }

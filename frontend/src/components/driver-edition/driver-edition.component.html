@@ -1,32 +1,27 @@
-<div *ngIf="driver">
-  <form [formGroup]="form" style="width: 300px">
-    <mat-form-field appearance="fill" style="width: 100%">
-      <mat-label>Nombre</mat-label>
-      <input matInput formControlName="name" />
-    </mat-form-field>
+<div class="center-container">
+  <div *ngIf="driver" class="form-card">
+    <form [formGroup]="form" style="width: 300px">
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" style="width: 100%">
-      <mat-label>Documento</mat-label>
-      <input matInput formControlName="documentNumber" />
-    </mat-form-field>
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Documento</mat-label>
+        <input matInput formControlName="documentNumber" />
+      </mat-form-field>
 
-    <mat-form-field *ngIf="isEdition" appearance="fill" style="width: 100%">
-      <mat-label>Patente del Micro</mat-label>
-      <input
-        matInput
-        readonly
-        [value]="driver.busRegistrationPlate || '-- LIBRE --'"
-      />
-    </mat-form-field>
-  </form>
+      <mat-form-field *ngIf="isEdition" appearance="fill" style="width: 100%">
+        <mat-label>Patente del Micro</mat-label>
+        <input
+          matInput
+          readonly
+          [value]="driver.busRegistrationPlate || '-- LIBRE --'"
+        />
+      </mat-form-field>
+    </form>
 
-  <div class="button-group">
-    <button mat-raised-button color="primary" type="button" (click)="onSave()">
-      Guardar
-    </button>
-    <button mat-stroked-button color="warn" type="button" (click)="onCancel()">
-      Cancelar
-    </button>
+    <form-buttons (cancel)="onCancel()" (save)="onSave()"></form-buttons>
   </div>
+  <div *ngIf="!driver">Cargando...</div>
 </div>
-<div *ngIf="!driver">Cargando...</div>
