@@ -23,6 +23,8 @@
 
     <form-buttons (cancel)="onCancel()" (save)="onSave()"></form-buttons>
   </div>
-
-  <div *ngIf="!kid">Cargando...</div>
 </div>
+
+<app-progress-bar [show]="loading && !kid" />
+
+<app-loading-error [show]="!loading && !kid && loadingError" />

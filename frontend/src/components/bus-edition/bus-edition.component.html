@@ -27,6 +27,8 @@
 
     <form-buttons (cancel)="onCancel()" (save)="onSave()"></form-buttons>
   </div>
-
-  <div *ngIf="!bus">Cargando...</div>
 </div>
+
+<app-progress-bar [show]="loading && !bus" />
+
+<app-loading-error [show]="!loading && !bus && loadingError" />

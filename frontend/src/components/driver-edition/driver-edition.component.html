@@ -23,5 +23,8 @@
 
     <form-buttons (cancel)="onCancel()" (save)="onSave()"></form-buttons>
   </div>
-  <div *ngIf="!driver">Cargando...</div>
 </div>
+
+<app-progress-bar [show]="loading && !driver" />
+
+<app-loading-error [show]="!loading && !driver && loadingError" />

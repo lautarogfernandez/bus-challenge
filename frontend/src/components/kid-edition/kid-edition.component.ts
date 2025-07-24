@@ -10,6 +10,8 @@ import { DriverUpdate } from '../../models/DriverUpdate';
 import { KidService } from '../../services/kid.service';
 import { KidListResponse } from '../../models/KidListResponse';
 import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
+import { LoadingErrorComponent } from '../loading-error/loading-error.component';
 
 @Component({
   selector: 'kid-edition',
@@ -21,6 +23,8 @@ import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
     MatSelectModule,
     MatInputModule,
     FormButtonsComponent,
+    ProgressBarComponent,
+    LoadingErrorComponent,
   ],
   templateUrl: './kid-edition.component.html',
   styleUrls: ['./kid-edition.component.css'],
@@ -29,6 +33,8 @@ export class KidEditionComponent {
   kid?: KidListResponse;
   isEdition = true;
   buses: any[] = [];
+  loading = false;
+  loadingError = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,6 +59,8 @@ export class KidEditionComponent {
 
   private getKidData(id: string) {
     if (id && id != '0') {
+      this.loading = true;
+
       this.kidService.getKidById(id).subscribe({
         next: (data) => {
           this.kid = data;
@@ -61,10 +69,13 @@ export class KidEditionComponent {
             documentNumber: data.documentNumber,
             name: data.name,
           });
+
+          this.loading = false;
         },
         error: (err) => {
-          console.error(err);
           this.kid = undefined;
+          this.loading = false;
+          this.loadingError = true;
         },
       });
     } else {

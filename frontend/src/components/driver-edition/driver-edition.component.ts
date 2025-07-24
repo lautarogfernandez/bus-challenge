@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DriverUpdate } from '../../models/DriverUpdate';
 import { DriverListResponse } from '../../models/DriverListResponse';
 import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
+import { LoadingErrorComponent } from '../loading-error/loading-error.component';
 
 @Component({
   selector: 'driver-edition',
@@ -21,6 +23,8 @@ import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
     MatSelectModule,
     MatInputModule,
     FormButtonsComponent,
+    ProgressBarComponent,
+    LoadingErrorComponent,
   ],
   templateUrl: './driver-edition.component.html',
   styleUrls: ['./driver-edition.component.css'],
@@ -29,6 +33,8 @@ export class DriverEditionComponent {
   driver?: DriverListResponse;
   isEdition = true;
   buses: any[] = [];
+  loading = false;
+  loadingError = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,6 +59,8 @@ export class DriverEditionComponent {
 
   private getDriverData(id: string) {
     if (id && id != '0') {
+      this.loading = true;
+
       this.driverService.getDriverById(id).subscribe({
         next: (data) => {
           this.driver = data;
@@ -61,10 +69,13 @@ export class DriverEditionComponent {
             documentNumber: data.documentNumber,
             name: data.name,
           });
+
+          this.loading = false;
         },
         error: (err) => {
-          console.error(err);
           this.driver = undefined;
+          this.loading = false;
+          this.loadingError = true;
         },
       });
     } else {

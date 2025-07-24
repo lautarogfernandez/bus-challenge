@@ -11,6 +11,8 @@ import { DriverService } from '../../services/driver.service';
 import { KidService } from '../../services/kid.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
+import { LoadingErrorComponent } from '../loading-error/loading-error.component';
 
 @Component({
   selector: 'bus-edition',
@@ -22,6 +24,8 @@ import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
     MatSelectModule,
     MatInputModule,
     FormButtonsComponent,
+    ProgressBarComponent,
+    LoadingErrorComponent,
   ],
   templateUrl: './bus-edition.component.html',
   styleUrls: ['./bus-edition.component.css'],
@@ -31,6 +35,8 @@ export class BusEditionComponent {
   isEdition = true;
   drivers: any[] = [];
   kids: any[] = [];
+  loading = false;
+  loadingError = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -62,6 +68,8 @@ export class BusEditionComponent {
 
   private getBusData(id: string) {
     if (id && id != '0') {
+      this.loading = true;
+
       this.busService.getById(id).subscribe({
         next: (data) => {
           this.bus = data;
@@ -71,10 +79,13 @@ export class BusEditionComponent {
             registrationPlate: data.registrationPlate,
             kidIds: data.kidIds,
           });
+
+          this.loading = false;
         },
         error: (err) => {
-          console.error(err);
           this.bus = undefined;
+          this.loading = false;
+          this.loadingError = true;
         },
       });
     } else {
