@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<BusContext>(option => option.UseSqlite(builder.Configuration.GetConnectionString("sqlite")));
+builder.Services.AddDbContext<ApplicationContext>(option => option.UseSqlite(builder.Configuration.GetConnectionString("sqlite")));
 
 builder.Services.AddMediatR(configuration =>
 {

@@ -7,9 +7,9 @@ namespace BusApi.Feature.Kids.Queries
 {
     public class GetKidByIdQueryHandler : IRequestHandler<GetKidByIdQuery, KidListResponse?>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public GetKidByIdQueryHandler(BusContext busContext) => _context = busContext;
+        public GetKidByIdQueryHandler(ApplicationContext context) => _context = context;
 
         public async Task<KidListResponse?> Handle(GetKidByIdQuery request, CancellationToken cancellationToken)
         {

@@ -5,9 +5,9 @@ namespace BusApi.Feature.Drivers.Commands
 {
     public class DeleteDriverCommandHandler : IRequestHandler<DeleteDriverCommand, Unit>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public DeleteDriverCommandHandler(BusContext busContext) => _context = busContext;
+        public DeleteDriverCommandHandler(ApplicationContext context) => _context = context;
 
         public async Task<Unit> Handle(DeleteDriverCommand request, CancellationToken cancellationToken)
         {

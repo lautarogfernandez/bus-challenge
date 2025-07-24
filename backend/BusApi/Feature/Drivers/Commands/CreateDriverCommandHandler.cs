@@ -6,12 +6,9 @@ namespace BusApi.Feature.Drivers.Commands
 {
     public class CreateDriverCommandHandler : IRequestHandler<CreateDriverCommand, Guid>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public CreateDriverCommandHandler(BusContext busContext)
-        {
-            _context = busContext;
-        }
+        public CreateDriverCommandHandler(ApplicationContext context) => _context = context;
 
         public async Task<Guid> Handle(CreateDriverCommand request, CancellationToken cancellationToken)
         {

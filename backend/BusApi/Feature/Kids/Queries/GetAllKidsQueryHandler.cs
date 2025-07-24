@@ -7,9 +7,9 @@ namespace BusApi.Feature.Kids.Queries
 {
     public class GetAllKidsQueryHandler : IRequestHandler<GetAllKidsQuery, IEnumerable<KidListResponse>>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public GetAllKidsQueryHandler(BusContext busContext) => _context = busContext;
+        public GetAllKidsQueryHandler(ApplicationContext context) => _context = context;
 
         public async Task<IEnumerable<KidListResponse>> Handle(GetAllKidsQuery request, CancellationToken cancellationToken)
         {

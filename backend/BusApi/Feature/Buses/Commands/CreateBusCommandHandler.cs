@@ -7,11 +7,11 @@ namespace BusApi.Feature.Buses.Commands
 {
     public class CreateBusCommandHandler : IRequestHandler<CreateBusCommand, Guid>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public CreateBusCommandHandler(BusContext busContext)
+        public CreateBusCommandHandler(ApplicationContext context)
         {
-            _context = busContext;
+            _context = context;
         }
 
         public async Task<Guid> Handle(CreateBusCommand request, CancellationToken cancellationToken)

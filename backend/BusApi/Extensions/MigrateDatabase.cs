@@ -7,7 +7,7 @@ namespace BusApi.Extensions
         public static IHost MigrateDatabase(this IHost host)
         {
             using (var scope = host.Services.CreateScope())
-            using (var appContext = scope.ServiceProvider.GetRequiredService<BusContext>())
+            using (var appContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>())
                 try
                 {
                     appContext.Database.EnsureCreated();

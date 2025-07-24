@@ -6,9 +6,9 @@ namespace BusApi.Feature.Kids.Commands
 {
     public class CreateKidCommandHandler : IRequestHandler<CreateKidCommand, Guid>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public CreateKidCommandHandler(BusContext busContext) => _context = busContext;
+        public CreateKidCommandHandler(ApplicationContext context) => _context = context;
 
         public async Task<Guid> Handle(CreateKidCommand request, CancellationToken cancellationToken)
         {

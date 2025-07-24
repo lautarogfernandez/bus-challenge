@@ -7,9 +7,9 @@ namespace BusApi.Feature.Buses.Queries
 {
     public class GetAllBusesQueryHandler : IRequestHandler<GetAllBusesQuery, IEnumerable<BusListResponse>>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public GetAllBusesQueryHandler(BusContext busContext) => _context = busContext;
+        public GetAllBusesQueryHandler(ApplicationContext context) => _context = context;
 
         public async Task<IEnumerable<BusListResponse>> Handle(GetAllBusesQuery request, CancellationToken cancellationToken)
         {

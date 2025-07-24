@@ -6,9 +6,9 @@ namespace BusApi.Feature.Drivers.Commands
 {
     public class UpdateDriverCommandHandler : IRequestHandler<UpdateDriverCommand, Unit>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public UpdateDriverCommandHandler(BusContext busContext) => _context = busContext;
+        public UpdateDriverCommandHandler(ApplicationContext context) => _context = context;
 
         public async Task<Unit> Handle(UpdateDriverCommand request, CancellationToken cancellationToken)
         {

@@ -5,9 +5,9 @@ namespace BusApi.Feature.Buses.Commands
 {
     public class DeleteBusCommandHandler : IRequestHandler<DeleteBusCommand, Unit>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public DeleteBusCommandHandler(BusContext busContext) => _context = busContext;
+        public DeleteBusCommandHandler(ApplicationContext context) => _context = context;
 
         public async Task<Unit> Handle(DeleteBusCommand request, CancellationToken cancellationToken)
         {

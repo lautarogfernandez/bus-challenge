@@ -7,9 +7,9 @@ namespace BusApi.Feature.Drivers.Queries
 {
     public class GetAllDriverQueryHandler : IRequestHandler<GetAllDriverQuery, IEnumerable<DriverListResponse>>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public GetAllDriverQueryHandler(BusContext busContext) => _context = busContext;
+        public GetAllDriverQueryHandler(ApplicationContext context) => _context = context;
 
         public async Task<IEnumerable<DriverListResponse>> Handle(GetAllDriverQuery request, CancellationToken cancellationToken)
         {

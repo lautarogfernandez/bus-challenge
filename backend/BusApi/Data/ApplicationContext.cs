@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BusApi.Data
 {
-    public class BusContext : DbContext
+    public class ApplicationContext : DbContext
     {
-        public BusContext(DbContextOptions<BusContext> options) : base(options)
-        {
-
-        }
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        { }
 
         public DbSet<Bus> Buses { get; set; }
         public DbSet<Driver> Drivers { get; set; }

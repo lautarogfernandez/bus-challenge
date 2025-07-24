@@ -6,12 +6,9 @@ namespace BusApi.Feature.Buses.Commands
 {
     public class UpdateBusCommandHandler : IRequestHandler<UpdateBusCommand, Unit>
     {
-        private readonly BusContext _context;
+        private readonly ApplicationContext _context;
 
-        public UpdateBusCommandHandler(BusContext busContext)
-        {
-            _context = busContext;
-        }
+        public UpdateBusCommandHandler(ApplicationContext context) => _context = context;
 
         public async Task<Unit> Handle(UpdateBusCommand request, CancellationToken cancellationToken)
         {
