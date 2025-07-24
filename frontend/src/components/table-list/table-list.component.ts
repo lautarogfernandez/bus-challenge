@@ -1,29 +1,46 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, of } from 'rxjs';
 import { TableColumn } from '../../models/TableColumn';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 @Component({
   selector: 'table-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSortModule,
+  ],
   templateUrl: './table-list.component.html',
   styleUrls: ['./table-list.component.css'],
 })
-export class TableListComponent {
+export class TableListComponent implements AfterViewInit {
+  @ViewChild(MatSort) sort!: MatSort;
+
   @Input() data: any[] = [];
   @Input() columns: TableColumn[] = [];
   @Input() entityName: string = '';
   @Input() editionUrl: string = '';
   @Input() onDeleteCallback: (id: string) => Observable<void> = () => of();
   @Input() getRowIdentifier: (row: any) => string = (row) => row?.id ?? '';
+
+  dataSource = new MatTableDataSource<any>([]);
 
   constructor(
     private router: Router,
@@ -35,6 +52,18 @@ export class TableListComponent {
 
   ngOnInit(): void {
     this.displayedColumns = ['actions', ...this.columns.map((c) => c.name)];
+
+    this.dataSource.data = this.data;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      this.dataSource.data = this.data;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   onAdd() {
