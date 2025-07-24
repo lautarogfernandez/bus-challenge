@@ -12,23 +12,23 @@ export class BusService {
 
   constructor(private http: HttpClient) {}
 
-  getBuses(): Observable<BusListResponse[]> {
+  getAll(): Observable<BusListResponse[]> {
     return this.http.get<BusListResponse[]>(this.apiUrl);
   }
 
-  getBusById(id: string): Observable<BusResponse> {
+  getById(id: string): Observable<BusResponse> {
     return this.http.get<BusResponse>(`${this.apiUrl}/${id}`);
   }
 
-  createBus(bus: BusResponse): Observable<void> {
+  create(bus: BusResponse): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}`, bus);
   }
 
-  updateBus(bus: BusResponse): Observable<void> {
+  update(bus: BusResponse): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${bus.id}`, bus);
   }
 
-  deleteBus(id: string): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

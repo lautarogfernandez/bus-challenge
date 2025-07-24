@@ -60,7 +60,7 @@ export class BusEditionComponent {
 
   private getBusData(id: string) {
     if (id && id != '0') {
-      this.busService.getBusById(id).subscribe({
+      this.busService.getById(id).subscribe({
         next: (data) => {
           this.bus = data;
 
@@ -92,7 +92,7 @@ export class BusEditionComponent {
     };
 
     if (this.isEdition) {
-      this.busService.updateBus(data).subscribe({
+      this.busService.update(data).subscribe({
         next: (data) => {
           this.handleSuccessOnSave('actualizado');
         },
@@ -108,7 +108,7 @@ export class BusEditionComponent {
         },
       });
     } else {
-      this.busService.createBus(data).subscribe({
+      this.busService.create(data).subscribe({
         next: (data) => this.handleSuccessOnSave('creado'),
         error: (err) => this.handleErrorOnSave('creado', err),
       });
