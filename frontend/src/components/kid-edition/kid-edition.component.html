@@ -1,0 +1,32 @@
+<div *ngIf="kid">
+  <form [formGroup]="form" style="width: 300px">
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Documento</mat-label>
+      <input matInput formControlName="documentNumber" />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isEdition" appearance="fill" style="width: 100%">
+      <mat-label>Patente del Micro</mat-label>
+      <input
+        matInput
+        readonly
+        [value]="kid.busRegistrationPlate || '-- LIBRE --'"
+      />
+    </mat-form-field>
+  </form>
+
+  <div class="button-group">
+    <button mat-raised-button color="primary" type="button" (click)="onSave()">
+      Guardar
+    </button>
+    <button mat-stroked-button color="warn" type="button" (click)="onCancel()">
+      Cancelar
+    </button>
+  </div>
+</div>
+<div *ngIf="!kid">Cargando...</div>

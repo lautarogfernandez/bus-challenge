@@ -1,20 +1,34 @@
 ﻿using BusApi.Data;
-using BusApi.Domain;
+using BusApi.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusApi.Feature.Kids.Queries
 {
-    public class GetKidByIdQueryHandler : IRequestHandler<GetKidByIdQuery, Kid?>
+    public class GetKidByIdQueryHandler : IRequestHandler<GetKidByIdQuery, KidListResponse?>
     {
         private readonly BusContext _context;
 
         public GetKidByIdQueryHandler(BusContext busContext) => _context = busContext;
 
-        public async Task<Kid?> Handle(GetKidByIdQuery request, CancellationToken cancellationToken)
+        public async Task<KidListResponse?> Handle(GetKidByIdQuery request, CancellationToken cancellationToken)
         {
-            var kid = await _context.Kids.FindAsync(request.Id);
+            var kid = await _context.Kids
+                .Include(b => b.Bus)
+                .FirstOrDefaultAsync(b => b.Id == request.Id, cancellationToken);
 
-            return kid;
+            if (kid == null)
+                return null;
+
+            var response = new KidListResponse
+            {
+                Id = kid.Id,
+                Name = kid.Name,
+                DocumentNumber = kid.DocumentNumber,
+                BusRegistrationPlate = kid.Bus?.RegistrationPlate
+            };
+
+            return response;
         }
     }
 }

@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
 import { KidService } from '../../services/kid.service';
 import { KidListResponse } from '../../models/KidListResponse';
 import { TableListComponent } from '../table-list/table-list.component';
@@ -12,13 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'kid-list',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule,
-    TableListComponent,
-  ],
+  imports: [CommonModule, TableListComponent],
   templateUrl: './kid-list.component.html',
   styleUrls: ['./kid-list.component.css'],
 })

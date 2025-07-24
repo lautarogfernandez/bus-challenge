@@ -38,6 +38,13 @@ namespace BusApi.Controllers
             return Created(string.Empty, kidId);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateKidCommand command)
+        {
+            await _sender.Send(command);
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

@@ -5,6 +5,7 @@ import { BusEditionComponent } from '../components/bus-edition/bus-edition.compo
 import { DriverListComponent } from '../components/driver-list/driver-list.component';
 import { DriverEditionComponent } from '../components/driver-edition/driver-edition.component';
 import { KidListComponent } from '../components/kid-list/kid-list.component';
+import { KidEditionComponent } from '../components/kid-edition/kid-edition.component';
 
 export const routes: Routes = [
   {
@@ -21,5 +22,6 @@ export const routes: Routes = [
     path: 'kids',
     component: KidListComponent,
   },
+  { path: 'kids/:id', component: KidEditionComponent },
   { path: '**', component: MenuAppComponent },
 ];

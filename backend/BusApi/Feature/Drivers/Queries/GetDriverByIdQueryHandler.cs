@@ -13,7 +13,6 @@ namespace BusApi.Feature.Drivers.Queries
 
         public async Task<DriverListResponse?> Handle(GetDriverByIdQuery request, CancellationToken cancellationToken)
         {
-
             var driver = await _context.Drivers
                 .Include(b => b.Bus)
                 .FirstOrDefaultAsync(b => b.Id == request.Id, cancellationToken);
