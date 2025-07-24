@@ -2,5 +2,5 @@ export interface DriverListResponse {
   id: string;
   documentNumber: string;
   name: string;
-  busRegistrationPlate: string;
+  busRegistrationPlate: string | null | undefined;
 }

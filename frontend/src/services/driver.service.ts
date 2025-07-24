@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DriverListResponse } from '../models/DriverListResponse';
-import { DriverResponse } from '../models/DriverResponse';
+import { DriverUpdate } from '../models/DriverUpdate';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +16,16 @@ export class DriverService {
     return this.http.get<DriverListResponse[]>(this.apiUrl);
   }
 
-  getDriverById(id: string): Observable<DriverResponse> {
-    return this.http.get<DriverResponse>(`${this.apiUrl}/${id}`);
+  getDriverById(id: string): Observable<DriverListResponse> {
+    return this.http.get<DriverListResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  createDriver(driver: DriverUpdate): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}`, driver);
+  }
+
+  updateDriver(driver: DriverUpdate): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${driver.id}`, driver);
   }
 
   deleteDriver(id: string): Observable<void> {

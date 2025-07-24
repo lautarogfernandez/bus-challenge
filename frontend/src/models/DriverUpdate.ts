@@ -1,4 +1,4 @@
-export interface DriverResponse {
+export interface DriverUpdate {
   id: string;
   documentNumber: string;
   name: string;

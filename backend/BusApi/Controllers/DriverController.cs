@@ -1,3 +1,4 @@
+using BusApi.Feature.Buses.Commands;
 using BusApi.Feature.Drivers.Commands;
 using BusApi.Feature.Drivers.Queries;
 using MediatR;
@@ -36,6 +37,13 @@ namespace BusApi.Controllers
         {
             var driverId = await _sender.Send(command);
             return Created(string.Empty, driverId);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDriverCommand command)
+        {
+            await _sender.Send(command);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
