@@ -1,0 +1,13 @@
+.center-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 1.5em;
+  width: fit-content;
+  margin: 2em auto;
+  background-color: transparent;
+}

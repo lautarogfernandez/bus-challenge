@@ -1,36 +1,32 @@
-<div *ngIf="bus">
-  <form [formGroup]="form" style="width: 300px">
-    <mat-form-field appearance="fill" style="width: 100%">
-      <mat-label>Chofer</mat-label>
-      <mat-select formControlName="driverId">
-        <mat-option *ngFor="let driver of drivers" [value]="driver.id">
-          {{ driver.name }} - {{ driver.documentNumber }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<div class="center-container">
+  <div *ngIf="bus" class="form-card">
+    <form [formGroup]="form" style="width: 300px">
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Chofer</mat-label>
+        <mat-select formControlName="driverId">
+          <mat-option *ngFor="let driver of drivers" [value]="driver.id">
+            {{ driver.name }} - {{ driver.documentNumber }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" style="width: 100%">
-      <mat-label>Patente</mat-label>
-      <input matInput formControlName="registrationPlate" />
-    </mat-form-field>
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Patente</mat-label>
+        <input matInput formControlName="registrationPlate" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" style="width: 100%">
-      <mat-label>Chicos</mat-label>
-      <mat-select formControlName="kidIds" multiple>
-        <mat-option *ngFor="let kid of kids" [value]="kid.id">
-          {{ kid.name }} - {{ kid.documentNumber }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Chicos</mat-label>
+        <mat-select formControlName="kidIds" multiple>
+          <mat-option *ngFor="let kid of kids" [value]="kid.id">
+            {{ kid.name }} - {{ kid.documentNumber }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
 
-  <div class="button-group">
-    <button mat-raised-button color="primary" type="button" (click)="onSave()">
-      Guardar
-    </button>
-    <button mat-stroked-button color="warn" type="button" (click)="onCancel()">
-      Cancelar
-    </button>
+    <form-buttons (cancel)="onCancel()" (save)="onSave()"></form-buttons>
   </div>
+
+  <div *ngIf="!bus">Cargando...</div>
 </div>
-<div *ngIf="!bus">Cargando...</div>

@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DriverService } from '../../services/driver.service';
 import { KidService } from '../../services/kid.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
 
 @Component({
   selector: 'bus-edition',
@@ -20,6 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    FormButtonsComponent,
   ],
   templateUrl: './bus-edition.component.html',
   styleUrls: ['./bus-edition.component.css'],
