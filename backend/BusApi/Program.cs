@@ -12,6 +12,9 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes: true);
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 builder.Services.AddDbContext<ApplicationContext>(option => option.UseSqlite(builder.Configuration.GetConnectionString("sqlite")));
 
 builder.Services.AddMediatR(configuration =>
@@ -43,6 +46,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseExceptionHandler();
 
 app.UseCors(MyAllowSpecificOrigins);
 
