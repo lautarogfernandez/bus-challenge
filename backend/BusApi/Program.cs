@@ -1,5 +1,7 @@
+using BusApi.Behaviors;
 using BusApi.Data;
 using BusApi.Extensions;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +10,15 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes: true);
+
 builder.Services.AddDbContext<ApplicationContext>(option => option.UseSqlite(builder.Configuration.GetConnectionString("sqlite")));
 
 builder.Services.AddMediatR(configuration =>
 {
     configuration.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+
+    configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
