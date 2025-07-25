@@ -14,10 +14,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./kid-list.component.css'],
 })
 export class KidListComponent {
-  constructor(private kidService: KidService) {}
-
   kids: KidListResponse[] = [];
-
   columns: TableColumn[] = [
     {
       name: 'name',
@@ -32,11 +29,23 @@ export class KidListComponent {
       label: 'Patente del Micro',
     },
   ];
+  loading: boolean = false;
+  loadingError: boolean = false;
+
+  constructor(private kidService: KidService) {}
 
   ngOnInit(): void {
+    this.loading = true;
+
     this.kidService.getKids().subscribe({
-      next: (data) => (this.kids = data),
-      error: (err) => console.error(err),
+      next: (data) => {
+        this.kids = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        this.loadingError = true;
+      },
     });
   }
 

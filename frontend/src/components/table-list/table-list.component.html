@@ -54,3 +54,7 @@
     </table>
   </div>
 </div>
+
+<app-progress-bar [show]="loading" />
+
+<app-loading-error [show]="!loading && loadingError" />

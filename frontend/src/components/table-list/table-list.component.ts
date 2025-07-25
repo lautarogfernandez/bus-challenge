@@ -16,6 +16,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, of } from 'rxjs';
 import { TableColumn } from '../../models/TableColumn';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
+import { LoadingErrorComponent } from '../loading-error/loading-error.component';
 
 @Component({
   selector: 'table-list',
@@ -26,6 +28,8 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
     MatButtonModule,
     MatIconModule,
     MatSortModule,
+    ProgressBarComponent,
+    LoadingErrorComponent,
   ],
   templateUrl: './table-list.component.html',
   styleUrls: ['./table-list.component.css'],
@@ -39,6 +43,8 @@ export class TableListComponent implements AfterViewInit {
   @Input() editionUrl: string = '';
   @Input() onDeleteCallback: (id: string) => Observable<void> = () => of();
   @Input() getRowIdentifier: (row: any) => string = (row) => row?.id ?? '';
+  @Input() loading: boolean = false;
+  @Input() loadingError: boolean = false;
 
   dataSource = new MatTableDataSource<any>([]);
 

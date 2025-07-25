@@ -14,10 +14,7 @@ import { TableListComponent } from '../table-list/table-list.component';
   styleUrls: ['./driver-list.component.css'],
 })
 export class DriverListComponent {
-  constructor(private driverService: DriverService) {}
-
   drivers: DriverListResponse[] = [];
-
   columns: TableColumn[] = [
     {
       name: 'documentNumber',
@@ -32,11 +29,23 @@ export class DriverListComponent {
       label: 'Patente del Micro',
     },
   ];
+  loading: boolean = false;
+  loadingError: boolean = false;
+
+  constructor(private driverService: DriverService) {}
 
   ngOnInit(): void {
+    this.loading = true;
+
     this.driverService.getDrivers().subscribe({
-      next: (data) => (this.drivers = data),
-      error: (err) => console.error(err),
+      next: (data) => {
+        this.drivers = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        this.loadingError = true;
+      },
     });
   }
 

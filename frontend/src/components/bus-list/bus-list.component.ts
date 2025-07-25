@@ -14,10 +14,7 @@ import { TableListComponent } from '../table-list/table-list.component';
   styleUrls: ['./bus-list.component.css'],
 })
 export class BusListComponent {
-  constructor(private busService: BusService) {}
-
   buses: BusListResponse[] = [];
-
   columns: TableColumn[] = [
     {
       name: 'registrationPlate',
@@ -32,11 +29,23 @@ export class BusListComponent {
       label: 'Chofer',
     },
   ];
+  loading: boolean = false;
+  loadingError: boolean = false;
+
+  constructor(private busService: BusService) {}
 
   ngOnInit(): void {
+    this.loading = true;
+
     this.busService.getAll().subscribe({
-      next: (data) => (this.buses = data),
-      error: (err) => console.error(err),
+      next: (data) => {
+        this.buses = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        this.loadingError = true;
+      },
     });
   }
 
