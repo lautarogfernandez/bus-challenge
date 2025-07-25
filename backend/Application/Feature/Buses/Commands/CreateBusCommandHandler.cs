@@ -1,0 +1,30 @@
+﻿using Application.Data;
+using Domain.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+
+namespace Application.Feature.Buses.Commands
+{
+    public class CreateBusCommandHandler : IRequestHandler<CreateBusCommand, Guid>
+    {
+        private readonly ApplicationContext _context;
+
+        public CreateBusCommandHandler(ApplicationContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<Guid> Handle(CreateBusCommand request, CancellationToken cancellationToken)
+        {
+            var kids = await _context.Kids
+             .Where(k => request.KidIds.Contains(k.Id))
+             .ToListAsync(cancellationToken);
+            var bus = new Bus { RegistrationPlate = request.RegistrationPlate, DriverId = request.DriverId, Kids = kids };
+
+            _context.Buses.Add(bus);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return bus.Id;
+        }
+    }
+}

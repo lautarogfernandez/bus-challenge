@@ -1,10 +1,9 @@
-using BusApi.Feature.Buses.Commands;
-using BusApi.Feature.Drivers.Commands;
-using BusApi.Feature.Drivers.Queries;
+using Application.Feature.Drivers.Commands;
+using Application.Feature.Drivers.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BusApi.Controllers
+namespace Application.Controllers
 {
     [ApiController]
     [Route("[controller]")]

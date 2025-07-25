@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36310.24 d17.14
+VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusApi", "BusApi.csproj", "{594BBC57-3F65-4950-B940-596AB3BC223B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\Bus.Domain\Domain.csproj", "{ECFC2011-8097-4F6A-B98C-62DBADF93523}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "..\Application\Application.csproj", "{6B7AC408-2275-47D5-8DEA-5C7BAF9A548C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{594BBC57-3F65-4950-B940-596AB3BC223B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{594BBC57-3F65-4950-B940-596AB3BC223B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{594BBC57-3F65-4950-B940-596AB3BC223B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECFC2011-8097-4F6A-B98C-62DBADF93523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECFC2011-8097-4F6A-B98C-62DBADF93523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECFC2011-8097-4F6A-B98C-62DBADF93523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECFC2011-8097-4F6A-B98C-62DBADF93523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B7AC408-2275-47D5-8DEA-5C7BAF9A548C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7AC408-2275-47D5-8DEA-5C7BAF9A548C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B7AC408-2275-47D5-8DEA-5C7BAF9A548C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B7AC408-2275-47D5-8DEA-5C7BAF9A548C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

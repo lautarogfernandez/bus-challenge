@@ -1,5 +1,6 @@
+using Application.Data;
+using Application.Extensions;
 using BusApi.Behaviors;
-using BusApi.Data;
 using BusApi.Extensions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;

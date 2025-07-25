@@ -1,5 +1,5 @@
-using BusApi.Feature.Kids.Commands;
-using BusApi.Feature.Kids.Queries;
+using Application.Feature.Kids.Commands;
+using Application.Feature.Kids.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

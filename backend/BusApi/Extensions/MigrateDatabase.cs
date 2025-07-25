@@ -1,6 +1,6 @@
-﻿using BusApi.Data;
+﻿using Application.Data;
 
-namespace BusApi.Extensions
+namespace Application.Extensions
 {
     public static class MigrationManager
     {
