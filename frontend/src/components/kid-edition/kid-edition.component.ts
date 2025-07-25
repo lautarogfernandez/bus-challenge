@@ -69,7 +69,7 @@ export class KidEditionComponent {
 
     this.getKidData(id);
 
-    this.title = `${this.isEdition ? 'Edición' : 'Creación'} de Chofer`;
+    this.title = `${this.isEdition ? 'Edición' : 'Creación'} de Chico`;
   }
 
   private getKidData(id: string) {

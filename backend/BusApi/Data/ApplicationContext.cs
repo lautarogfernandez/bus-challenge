@@ -41,7 +41,7 @@ namespace BusApi.Data
                 entity.HasOne(x => x.Bus)
                       .WithMany(b => b.Kids)
                       .HasForeignKey(x => x.BusId)
-                      .OnDelete(DeleteBehavior.Restrict);
+                      .OnDelete(DeleteBehavior.SetNull);
             });
         }
     }
