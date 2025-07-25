@@ -37,7 +37,7 @@ export class DriverListComponent {
   ngOnInit(): void {
     this.loading = true;
 
-    this.driverService.getDrivers().subscribe({
+    this.driverService.getAll().subscribe({
       next: (data) => {
         this.drivers = data;
         this.loading = false;
@@ -54,6 +54,6 @@ export class DriverListComponent {
   }
 
   onDeleteCallback = (id: string): Observable<void> => {
-    return this.driverService.deleteDriver(id);
+    return this.driverService.delete(id);
   };
 }

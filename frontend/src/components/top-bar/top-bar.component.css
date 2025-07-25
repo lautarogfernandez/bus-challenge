@@ -17,3 +17,9 @@
 .top-bar-link:hover {
   color: lightgray !important;
 }
+
+.app-logo {
+  height: 32px;
+  width: auto;
+  margin-right: 8px;
+}

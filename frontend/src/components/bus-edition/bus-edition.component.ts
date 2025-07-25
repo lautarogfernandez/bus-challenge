@@ -149,7 +149,7 @@ export class BusEditionComponent {
   }
 
   private getDrivers() {
-    this.driverService.getDrivers().subscribe({
+    this.driverService.getAll().subscribe({
       next: (data) => {
         this.drivers = data;
       },

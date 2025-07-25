@@ -61,7 +61,7 @@ export class DriverEditionComponent {
     if (id && id != '0') {
       this.loading = true;
 
-      this.driverService.getDriverById(id).subscribe({
+      this.driverService.getById(id).subscribe({
         next: (data) => {
           this.driver = data;
 
@@ -99,7 +99,7 @@ export class DriverEditionComponent {
     };
 
     if (this.isEdition) {
-      this.driverService.updateDriver(data).subscribe({
+      this.driverService.update(data).subscribe({
         next: (data) => {
           this.handleSuccessOnSave('actualizado');
         },
@@ -115,7 +115,7 @@ export class DriverEditionComponent {
         },
       });
     } else {
-      this.driverService.createDriver(data).subscribe({
+      this.driverService.create(data).subscribe({
         next: (data) => this.handleSuccessOnSave('creado'),
         error: (err) => this.handleErrorOnSave('creado', err),
       });
