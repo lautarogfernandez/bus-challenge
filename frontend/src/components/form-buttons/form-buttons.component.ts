@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class FormButtonsComponent {
   @Input() cancelLabel: string = 'Cancelar';
   @Input() saveLabel: string = 'Guardar';
+  @Input() canSave: boolean = true;
 
   @Output() cancel = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();

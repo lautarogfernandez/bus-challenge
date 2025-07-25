@@ -8,6 +8,7 @@
     mat-fab
     extended
     type="button"
+    [disabled]="!canSave"
     (click)="onSave()"
     class="green-button"
   >

@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -35,6 +40,7 @@ export class KidEditionComponent {
   buses: any[] = [];
   loading = false;
   loadingError = false;
+  title: string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,8 +49,15 @@ export class KidEditionComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  documentNumberControl = new FormControl('');
-  nameControl = new FormControl('');
+  documentNumberControl = new FormControl('', [
+    Validators.required,
+    Validators.maxLength(8),
+    Validators.pattern(/^[0-9]*$/),
+  ]);
+  nameControl = new FormControl('', [
+    Validators.required,
+    Validators.maxLength(50),
+  ]);
 
   form = new FormGroup({
     documentNumber: this.documentNumberControl,
@@ -55,6 +68,8 @@ export class KidEditionComponent {
     const id = this.activatedRoute.snapshot.paramMap.get('id') || '';
 
     this.getKidData(id);
+
+    this.title = `${this.isEdition ? 'Edición' : 'Creación'} de Chofer`;
   }
 
   private getKidData(id: string) {

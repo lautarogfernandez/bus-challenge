@@ -39,6 +39,7 @@ export class TableListComponent implements AfterViewInit {
 
   @Input() data: any[] = [];
   @Input() columns: TableColumn[] = [];
+  @Input() title: string = '';
   @Input() entityName: string = '';
   @Input() editionUrl: string = '';
   @Input() onDeleteCallback: (id: string) => Observable<void> = () => of();

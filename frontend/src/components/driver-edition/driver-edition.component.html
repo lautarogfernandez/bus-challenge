@@ -1,14 +1,33 @@
 <div class="center-container">
   <div *ngIf="driver" class="form-card">
+    <h2 class="page-title">{{ title }}</h2>
+
     <form [formGroup]="form" style="width: 300px">
       <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="name" />
+
+        <mat-error *ngIf="form.get('name')?.hasError('required')">
+          Es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+          No puede tener más de 50 caracteres.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Documento</mat-label>
         <input matInput formControlName="documentNumber" />
+
+        <mat-error *ngIf="form.get('documentNumber')?.hasError('required')">
+          Es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="form.get('documentNumber')?.hasError('maxlength')">
+          No puede tener más de 8 caracteres.
+        </mat-error>
+        <mat-error *ngIf="documentNumberControl.hasError('pattern')">
+          Solo se permiten números
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field *ngIf="isEdition" appearance="fill" style="width: 100%">
@@ -21,7 +40,11 @@
       </mat-form-field>
     </form>
 
-    <form-buttons (cancel)="onCancel()" (save)="onSave()"></form-buttons>
+    <form-buttons
+      [canSave]="form.valid"
+      (cancel)="onCancel()"
+      (save)="onSave()"
+    ></form-buttons>
   </div>
 </div>
 

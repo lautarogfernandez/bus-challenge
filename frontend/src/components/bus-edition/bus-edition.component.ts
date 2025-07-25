@@ -3,7 +3,12 @@ import { Component } from '@angular/core';
 import { BusService } from '../../services/bus.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BusResponse } from '../../models/BusResponse';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -37,6 +42,7 @@ export class BusEditionComponent {
   kids: any[] = [];
   loading = false;
   loadingError = false;
+  title: string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,8 +53,11 @@ export class BusEditionComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  driverControl = new FormControl('');
-  registrationPlateControl = new FormControl('');
+  driverControl = new FormControl('', [Validators.required]);
+  registrationPlateControl = new FormControl('', [
+    Validators.required,
+    Validators.maxLength(10),
+  ]);
   kidsControl = new FormControl([] as string[]);
 
   form = new FormGroup({
@@ -64,6 +73,8 @@ export class BusEditionComponent {
     const id = this.activatedRoute.snapshot.paramMap.get('id') || '';
 
     this.getBusData(id);
+
+    this.title = `${this.isEdition ? 'Edición' : 'Creación'} de Micro`;
   }
 
   private getBusData(id: string) {

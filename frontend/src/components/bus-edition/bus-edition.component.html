@@ -1,5 +1,7 @@
 <div class="center-container">
   <div *ngIf="bus" class="form-card">
+    <h2 class="page-title">{{ title }}</h2>
+
     <form [formGroup]="form" style="width: 300px">
       <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Chofer</mat-label>
@@ -8,11 +10,22 @@
             {{ driver.name }} - {{ driver.documentNumber }}
           </mat-option>
         </mat-select>
+
+        <mat-error *ngIf="form.get('driverId')?.hasError('required')">
+          Es obligatorio.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Patente</mat-label>
         <input matInput formControlName="registrationPlate" />
+
+        <mat-error *ngIf="form.get('registrationPlate')?.hasError('required')">
+          Es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="form.get('registrationPlate')?.hasError('maxlength')">
+          No puede tener más de 10 caracteres.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" style="width: 100%">
@@ -25,7 +38,11 @@
       </mat-form-field>
     </form>
 
-    <form-buttons (cancel)="onCancel()" (save)="onSave()"></form-buttons>
+    <form-buttons
+      [canSave]="form.valid"
+      (cancel)="onCancel()"
+      (save)="onSave()"
+    ></form-buttons>
   </div>
 </div>
 
