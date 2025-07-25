@@ -4,7 +4,7 @@ import { KidService } from '../../services/kid.service';
 import { KidListResponse } from '../../models/KidListResponse';
 import { TableListComponent } from '../table-list/table-list.component';
 import { TableColumn } from '../../models/TableColumn';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'kid-list',
@@ -54,6 +54,10 @@ export class KidListComponent {
   }
 
   onDeleteCallback = (id: string): Observable<void> => {
-    return this.kidService.deleteKid(id);
+    return this.kidService.deleteKid(id).pipe(
+      tap(() => {
+        this.kids = this.kids.filter((x) => x.id !== id);
+      })
+    );
   };
 }

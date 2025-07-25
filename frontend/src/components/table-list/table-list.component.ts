@@ -91,8 +91,6 @@ export class TableListComponent implements AfterViewInit {
       if (result) {
         this.onDeleteCallback(row.id).subscribe({
           next: (_) => {
-            this.data = this.data.filter((b) => b.id !== row.id);
-
             this.snackBar.open(
               `${this.entityName} eliminado con éxito`,
               'Cerrar',

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { BusService } from '../../services/bus.service';
 import { BusListResponse } from '../../models/BusListResponse';
 import { TableColumn } from '../../models/TableColumn';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { TableListComponent } from '../table-list/table-list.component';
 
 @Component({
@@ -54,6 +54,10 @@ export class BusListComponent {
   }
 
   onDeleteCallback = (id: string): Observable<void> => {
-    return this.busService.delete(id);
+    return this.busService.delete(id).pipe(
+      tap(() => {
+        this.buses = this.buses.filter((x) => x.id !== id);
+      })
+    );
   };
 }

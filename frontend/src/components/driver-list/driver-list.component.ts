@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { DriverListResponse } from '../../models/DriverListResponse';
 import { DriverService } from '../../services/driver.service';
 import { TableColumn } from '../../models/TableColumn';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { TableListComponent } from '../table-list/table-list.component';
 
 @Component({
@@ -54,6 +54,10 @@ export class DriverListComponent {
   }
 
   onDeleteCallback = (id: string): Observable<void> => {
-    return this.driverService.delete(id);
+    return this.driverService.delete(id).pipe(
+      tap(() => {
+        this.drivers = this.drivers.filter((x) => x.id !== id);
+      })
+    );
   };
 }
