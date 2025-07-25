@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DriverListResponse } from '../models/DriverListResponse';
 import { DriverUpdate } from '../models/DriverUpdate';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DriverService {
-  private apiUrl = 'https://localhost:7295/driver';
+  private apiUrl = `${environment.backendUrl}driver`;
 
   constructor(private http: HttpClient) {}
 

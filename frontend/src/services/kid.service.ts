@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { KidListResponse } from '../models/KidListResponse';
 import { KidUpdate } from '../models/KidUpdate';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KidService {
-  private apiUrl = 'https://localhost:7295/kid';
+  private apiUrl = `${environment.backendUrl}kid`;
 
   constructor(private http: HttpClient) {}
 

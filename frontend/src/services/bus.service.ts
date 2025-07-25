@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BusListResponse } from '../models/BusListResponse';
 import { BusResponse } from '../models/BusResponse';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BusService {
-  private apiUrl = 'https://localhost:7295/bus';
+  private apiUrl = `${environment.backendUrl}bus`;
 
   constructor(private http: HttpClient) {}
 
