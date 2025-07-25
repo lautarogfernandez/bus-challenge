@@ -1,11 +1,11 @@
-﻿using BusApi.Feature.Drivers.Commands;
+﻿using BusApi.Feature.Kids.Commands;
 using FluentValidation;
 
-namespace BusApi.Validators
+namespace BusApi.Feature.Kids.Validators
 {
-    public class UpdateDriverCommandValidator : AbstractValidator<UpdateDriverCommand>
+    public class CreateKidCommandValidator : AbstractValidator<CreateKidCommand>
     {
-        public UpdateDriverCommandValidator()
+        public CreateKidCommandValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
