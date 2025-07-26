@@ -27,7 +27,7 @@ namespace Test.Feature.Buses.Commands
                 .Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync([kid1, kid2]);
 
-            var newId = new Guid("d7868e4f-4401-44b3-a38e-373d7a77a152");
+            var newId = Guid.NewGuid();
             Bus? createdBus = null;
             busRepositoryMock
                 .Setup(r => r.CreateAsync(It.IsAny<Bus>(), It.IsAny<CancellationToken>()))
