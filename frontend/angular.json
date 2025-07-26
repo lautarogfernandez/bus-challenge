@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend": {
+    "bus-front-app": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -58,10 +58,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "frontend:build:production"
+              "buildTarget": "bus-front-app:build:production"
             },
             "development": {
-              "buildTarget": "frontend:build:development"
+              "buildTarget": "bus-front-app:build:development"
             }
           },
           "defaultConfiguration": "development"
