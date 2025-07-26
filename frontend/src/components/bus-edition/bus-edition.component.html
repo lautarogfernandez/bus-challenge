@@ -6,7 +6,13 @@
       <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Chofer</mat-label>
         <mat-select formControlName="driverId">
-          <mat-option *ngFor="let driver of drivers" [value]="driver.id">
+          <mat-option
+            *ngFor="let driver of drivers"
+            [value]="driver.id"
+            [disabled]="
+              driver.busRegistrationPlate && driver.id !== bus.driverId
+            "
+          >
             {{ driver.name }} - {{ driver.documentNumber }}
           </mat-option>
         </mat-select>
