@@ -30,6 +30,11 @@ namespace BusApi.Repositories
             return await _dbSet.Where(predicate).ToListAsync(cancellationToken);
         }
 
+        public async Task<int> CountAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await _dbSet.CountAsync(predicate, cancellationToken);
+        }
+
         public async Task CreateAsync(T entity, CancellationToken cancellationToken)
         {
             await _dbSet.AddAsync(entity, cancellationToken);

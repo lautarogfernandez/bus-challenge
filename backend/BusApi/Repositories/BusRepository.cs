@@ -1,5 +1,6 @@
 ﻿using BusApi.Data;
 using BusApi.Domain;
+using BusApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusApi.Repositories
@@ -14,6 +15,19 @@ namespace BusApi.Repositories
                 .Include(b => b.Kids)
                 .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
         }
-    }
 
+        public async Task<List<BusListResponse>> GetAllListAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Buses
+                .Include(b => b.Driver)
+                .Select(b => new BusListResponse
+                {
+                    Id = b.Id,
+                    RegistrationPlate = b.RegistrationPlate,
+                    DriverDocumentNumber = b.Driver.DocumentNumber,
+                    Kids = b.Kids.Count
+                })
+                .ToListAsync(cancellationToken);
+        }
+    }
 }
