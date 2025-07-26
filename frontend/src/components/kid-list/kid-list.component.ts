@@ -37,7 +37,7 @@ export class KidListComponent {
   ngOnInit(): void {
     this.loading = true;
 
-    this.kidService.getKids().subscribe({
+    this.kidService.getAll().subscribe({
       next: (data) => {
         this.kids = data;
         this.loading = false;
@@ -54,7 +54,7 @@ export class KidListComponent {
   }
 
   onDeleteCallback = (id: string): Observable<void> => {
-    return this.kidService.deleteKid(id).pipe(
+    return this.kidService.delete(id).pipe(
       tap(() => {
         this.kids = this.kids.filter((x) => x.id !== id);
       })

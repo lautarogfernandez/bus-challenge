@@ -17,6 +17,12 @@ import { DriverListResponse } from '../../models/DriverListResponse';
 import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { LoadingErrorComponent } from '../loading-error/loading-error.component';
+import {
+  getDetailPageTitle,
+  handleErrorOnSave,
+  handleSuccessOnSave,
+} from '../../utils/utils';
+import { ACTION_MESSAGES, ENTITIES } from '../../utils/textConstants';
 
 @Component({
   selector: 'driver-edition',
@@ -41,6 +47,8 @@ export class DriverEditionComponent {
   loading = false;
   loadingError = false;
   title: string = '';
+  entity: string = ENTITIES.DRIVER;
+  backUrl: string = '/drivers';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,19 +57,13 @@ export class DriverEditionComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  documentNumberControl = new FormControl('', [
-    Validators.required,
-    Validators.maxLength(8),
-    Validators.pattern(/^[0-9]*$/),
-  ]);
-  nameControl = new FormControl('', [
-    Validators.required,
-    Validators.maxLength(50),
-  ]);
-
   form = new FormGroup({
-    documentNumber: this.documentNumberControl,
-    name: this.nameControl,
+    documentNumber: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(8),
+      Validators.pattern(/^[0-9]*$/),
+    ]),
+    name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
   });
 
   ngOnInit() {
@@ -69,7 +71,7 @@ export class DriverEditionComponent {
 
     this.getDriverData(id);
 
-    this.title = `${this.isEdition ? 'Edición' : 'Creación'} de Chofer`;
+    this.title = getDetailPageTitle(this.entity, this.isEdition);
   }
 
   private getDriverData(id: string) {
@@ -116,44 +118,35 @@ export class DriverEditionComponent {
     if (this.isEdition) {
       this.driverService.update(data).subscribe({
         next: (data) => {
-          this.handleSuccessOnSave('actualizado');
+          this.handleSuccessOnSave(ACTION_MESSAGES.UPDATED);
         },
         error: (err) => {
-          this.snackBar.open(
-            'Error al intentar actualizar el Chofer',
-            'Cerrar',
-            {
-              duration: 3000,
-            }
-          ),
-            console.error(err);
+          this.handleErrorOnSave(ACTION_MESSAGES.UPDATED, err);
         },
       });
     } else {
       this.driverService.create(data).subscribe({
-        next: (data) => this.handleSuccessOnSave('creado'),
-        error: (err) => this.handleErrorOnSave('creado', err),
+        next: (data) => this.handleSuccessOnSave(ACTION_MESSAGES.CREATED),
+        error: (err) => this.handleErrorOnSave(ACTION_MESSAGES.CREATED, err),
       });
     }
   }
 
   private handleSuccessOnSave(action: string) {
-    this.snackBar.open(`Chofer ${action} con éxito`, 'Cerrar', {
-      duration: 3000,
-    });
-
-    this.router.navigate(['/drivers']);
+    handleSuccessOnSave(
+      this.snackBar,
+      this.entity,
+      action,
+      this.router,
+      this.backUrl
+    );
   }
 
   private handleErrorOnSave(action: string, err: any) {
-    this.snackBar.open(`Error al intentar ${action} el Chofer`, 'Cerrar', {
-      duration: 3000,
-    });
-
-    console.error(err);
+    handleErrorOnSave(this.snackBar, this.entity, action, err);
   }
 
   onCancel() {
-    this.router.navigate(['/drivers']);
+    this.router.navigate([this.backUrl]);
   }
 }

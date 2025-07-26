@@ -4,6 +4,7 @@ import { KidListResponse } from '../models/KidListResponse';
 import { KidUpdate } from '../models/KidUpdate';
 import { environment } from '../environments/environment';
 import { BaseCrudService } from './base-crud.service';
+import { API_ROUTES } from '../utils/textConstants';
 
 @Injectable({ providedIn: 'root' })
 export class KidService extends BaseCrudService<
@@ -12,6 +13,6 @@ export class KidService extends BaseCrudService<
   KidUpdate
 > {
   constructor(http: HttpClient) {
-    super(http, `${environment.backendUrl}kid`);
+    super(http, `${environment.backendUrl}${API_ROUTES.KID}`);
   }
 }

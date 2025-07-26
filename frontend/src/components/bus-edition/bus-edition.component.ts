@@ -18,6 +18,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { LoadingErrorComponent } from '../loading-error/loading-error.component';
+import {
+  getDetailPageTitle,
+  handleErrorOnSave,
+  handleSuccessOnSave,
+} from '../../utils/utils';
+import { ACTION_MESSAGES, ENTITIES } from '../../utils/textConstants';
 
 @Component({
   selector: 'bus-edition',
@@ -43,6 +49,8 @@ export class BusEditionComponent {
   loading = false;
   loadingError = false;
   title: string = '';
+  entity: string = ENTITIES.BUS;
+  backUrl: string = '/buses';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,17 +61,13 @@ export class BusEditionComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  driverControl = new FormControl('', [Validators.required]);
-  registrationPlateControl = new FormControl('', [
-    Validators.required,
-    Validators.maxLength(10),
-  ]);
-  kidsControl = new FormControl([] as string[]);
-
   form = new FormGroup({
-    driverId: this.driverControl,
-    registrationPlate: this.registrationPlateControl,
-    kidIds: this.kidsControl,
+    driverId: new FormControl('', [Validators.required]),
+    registrationPlate: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(10),
+    ]),
+    kidIds: new FormControl([] as string[]),
   });
 
   ngOnInit() {
@@ -74,7 +78,7 @@ export class BusEditionComponent {
 
     this.getBusData(id);
 
-    this.title = `${this.isEdition ? 'Edición' : 'Creación'} de Micro`;
+    this.title = getDetailPageTitle(this.entity, this.isEdition);
   }
 
   private getBusData(id: string) {
@@ -118,45 +122,36 @@ export class BusEditionComponent {
     if (this.isEdition) {
       this.busService.update(data).subscribe({
         next: (data) => {
-          this.handleSuccessOnSave('actualizado');
+          this.handleSuccessOnSave(ACTION_MESSAGES.UPDATED);
         },
         error: (err) => {
-          this.snackBar.open(
-            'Error al intentar actualizar el Micro',
-            'Cerrar',
-            {
-              duration: 3000,
-            }
-          ),
-            console.error(err);
+          this.handleErrorOnSave(ACTION_MESSAGES.UPDATED, err);
         },
       });
     } else {
       this.busService.create(data).subscribe({
-        next: (data) => this.handleSuccessOnSave('creado'),
-        error: (err) => this.handleErrorOnSave('creado', err),
+        next: (data) => this.handleSuccessOnSave(ACTION_MESSAGES.CREATED),
+        error: (err) => this.handleErrorOnSave(ACTION_MESSAGES.CREATED, err),
       });
     }
   }
 
   private handleSuccessOnSave(action: string) {
-    this.snackBar.open(`Micro ${action} con éxito`, 'Cerrar', {
-      duration: 3000,
-    });
-
-    this.router.navigate(['/buses']);
+    handleSuccessOnSave(
+      this.snackBar,
+      this.entity,
+      action,
+      this.router,
+      this.backUrl
+    );
   }
 
   private handleErrorOnSave(action: string, err: any) {
-    this.snackBar.open(`Error al intentar ${action} el Micro`, 'Cerrar', {
-      duration: 3000,
-    });
-
-    console.error(err);
+    handleErrorOnSave(this.snackBar, this.entity, action, err);
   }
 
   onCancel() {
-    this.router.navigate(['/buses']);
+    this.router.navigate([this.backUrl]);
   }
 
   private getDrivers() {
@@ -171,7 +166,7 @@ export class BusEditionComponent {
   }
 
   private getKids() {
-    this.kidService.getKids().subscribe({
+    this.kidService.getAll().subscribe({
       next: (data) => {
         this.kids = data;
       },

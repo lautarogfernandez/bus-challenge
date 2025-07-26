@@ -25,7 +25,7 @@
         <mat-error *ngIf="form.get('documentNumber')?.hasError('maxlength')">
           No puede tener más de 8 caracteres.
         </mat-error>
-        <mat-error *ngIf="documentNumberControl.hasError('pattern')">
+        <mat-error *ngIf="form.get('documentNumber')?.hasError('pattern')">
           Solo se permiten números
         </mat-error>
       </mat-form-field>

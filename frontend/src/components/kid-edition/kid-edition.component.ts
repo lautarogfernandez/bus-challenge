@@ -17,6 +17,12 @@ import { KidListResponse } from '../../models/KidListResponse';
 import { FormButtonsComponent } from '../form-buttons/form-buttons.component';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { LoadingErrorComponent } from '../loading-error/loading-error.component';
+import {
+  getDetailPageTitle,
+  handleErrorOnSave,
+  handleSuccessOnSave,
+} from '../../utils/utils';
+import { ACTION_MESSAGES, ENTITIES } from '../../utils/textConstants';
 
 @Component({
   selector: 'kid-edition',
@@ -41,6 +47,8 @@ export class KidEditionComponent {
   loading = false;
   loadingError = false;
   title: string = '';
+  entity: string = ENTITIES.KID;
+  backUrl: string = '/kids';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,19 +57,13 @@ export class KidEditionComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  documentNumberControl = new FormControl('', [
-    Validators.required,
-    Validators.maxLength(8),
-    Validators.pattern(/^[0-9]*$/),
-  ]);
-  nameControl = new FormControl('', [
-    Validators.required,
-    Validators.maxLength(50),
-  ]);
-
   form = new FormGroup({
-    documentNumber: this.documentNumberControl,
-    name: this.nameControl,
+    documentNumber: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(8),
+      Validators.pattern(/^[0-9]*$/),
+    ]),
+    name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
   });
 
   ngOnInit() {
@@ -69,14 +71,14 @@ export class KidEditionComponent {
 
     this.getKidData(id);
 
-    this.title = `${this.isEdition ? 'Edición' : 'Creación'} de Chico`;
+    this.title = getDetailPageTitle(this.entity, this.isEdition);
   }
 
   private getKidData(id: string) {
     if (id && id != '0') {
       this.loading = true;
 
-      this.kidService.getKidById(id).subscribe({
+      this.kidService.getById(id).subscribe({
         next: (data) => {
           this.kid = data;
 
@@ -114,46 +116,37 @@ export class KidEditionComponent {
     };
 
     if (this.isEdition) {
-      this.kidService.updateKid(data).subscribe({
+      this.kidService.update(data).subscribe({
         next: (data) => {
-          this.handleSuccessOnSave('actualizado');
+          this.handleSuccessOnSave(ACTION_MESSAGES.UPDATED);
         },
         error: (err) => {
-          this.snackBar.open(
-            'Error al intentar actualizar el Chico',
-            'Cerrar',
-            {
-              duration: 3000,
-            }
-          ),
-            console.error(err);
+          this.handleErrorOnSave(ACTION_MESSAGES.UPDATED, err);
         },
       });
     } else {
-      this.kidService.createKid(data).subscribe({
-        next: (data) => this.handleSuccessOnSave('creado'),
-        error: (err) => this.handleErrorOnSave('creado', err),
+      this.kidService.create(data).subscribe({
+        next: (data) => this.handleSuccessOnSave(ACTION_MESSAGES.CREATED),
+        error: (err) => this.handleErrorOnSave(ACTION_MESSAGES.CREATED, err),
       });
     }
   }
 
   private handleSuccessOnSave(action: string) {
-    this.snackBar.open(`Chico ${action} con éxito`, 'Cerrar', {
-      duration: 3000,
-    });
-
-    this.router.navigate(['/kids']);
+    handleSuccessOnSave(
+      this.snackBar,
+      this.entity,
+      action,
+      this.router,
+      this.backUrl
+    );
   }
 
   private handleErrorOnSave(action: string, err: any) {
-    this.snackBar.open(`Error al intentar ${action} el Chico`, 'Cerrar', {
-      duration: 3000,
-    });
-
-    console.error(err);
+    handleErrorOnSave(this.snackBar, this.entity, action, err);
   }
 
   onCancel() {
-    this.router.navigate(['/kids']);
+    this.router.navigate([this.backUrl]);
   }
 }
