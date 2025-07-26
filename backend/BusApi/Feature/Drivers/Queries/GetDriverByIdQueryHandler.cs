@@ -1,21 +1,18 @@
-﻿using BusApi.Data;
-using BusApi.Models;
+﻿using BusApi.Models;
+using BusApi.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusApi.Feature.Drivers.Queries
 {
     public class GetDriverByIdQueryHandler : IRequestHandler<GetDriverByIdQuery, DriverListResponse?>
     {
-        private readonly ApplicationContext _context;
+        private readonly IDriverRepository _driverRepository;
 
-        public GetDriverByIdQueryHandler(ApplicationContext context) => _context = context;
+        public GetDriverByIdQueryHandler(IDriverRepository driverRepository) => _driverRepository = driverRepository;
 
         public async Task<DriverListResponse?> Handle(GetDriverByIdQuery request, CancellationToken cancellationToken)
         {
-            var driver = await _context.Drivers
-                .Include(b => b.Bus)
-                .FirstOrDefaultAsync(b => b.Id == request.Id, cancellationToken);
+            var driver = await _driverRepository.GetByIdWithBusAsync(request.Id, cancellationToken);
 
             if (driver == null)
                 return null;

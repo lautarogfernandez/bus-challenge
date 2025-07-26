@@ -20,6 +20,7 @@ builder.Services.AddDbContext<ApplicationContext>(option => option.UseSqlite(bui
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IBusRepository, BusRepository>();
+builder.Services.AddScoped<IDriverRepository, DriverRepository>();
 
 builder.Services.AddMediatR(configuration =>
 {
