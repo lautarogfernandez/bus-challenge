@@ -1,28 +1,34 @@
-﻿using BusApi.Data;
-using BusApi.Domain;
+﻿using BusApi.Domain;
+using BusApi.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusApi.Feature.Buses.Commands
 {
     public class CreateBusCommandHandler : IRequestHandler<CreateBusCommand, Guid>
     {
-        private readonly ApplicationContext _context;
+        private readonly IRepository<Bus> _busRepository;
+        private readonly IRepository<Kid> _kidRepository;
 
-        public CreateBusCommandHandler(ApplicationContext context)
+        public CreateBusCommandHandler(IRepository<Bus> busRepository, IRepository<Kid> kidRepository)
         {
-            _context = context;
+            _busRepository = busRepository;
+            _kidRepository = kidRepository;
         }
 
         public async Task<Guid> Handle(CreateBusCommand request, CancellationToken cancellationToken)
         {
-            var kids = await _context.Kids
-             .Where(k => request.KidIds.Contains(k.Id))
-             .ToListAsync(cancellationToken);
-            var bus = new Bus { RegistrationPlate = request.RegistrationPlate, DriverId = request.DriverId, Kids = kids };
+            var kids = (await _kidRepository.GetAllAsync(cancellationToken))
+                .Where(k => request.KidIds.Contains(k.Id))
+                .ToList();
 
-            _context.Buses.Add(bus);
-            await _context.SaveChangesAsync(cancellationToken);
+            var bus = new Bus
+            {
+                RegistrationPlate = request.RegistrationPlate,
+                DriverId = request.DriverId,
+                Kids = kids
+            };
+
+            await _busRepository.CreateAsync(bus, cancellationToken);
 
             return bus.Id;
         }

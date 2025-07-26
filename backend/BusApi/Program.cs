@@ -1,13 +1,14 @@
 using BusApi.Behaviors;
 using BusApi.Data;
 using BusApi.Extensions;
+using BusApi.Repositories;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
+    
 builder.Services.AddOpenApi();
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes: true);
@@ -16,6 +17,9 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddDbContext<ApplicationContext>(option => option.UseSqlite(builder.Configuration.GetConnectionString("sqlite")));
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IBusRepository, BusRepository>();
 
 builder.Services.AddMediatR(configuration =>
 {
