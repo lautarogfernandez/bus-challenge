@@ -8,7 +8,7 @@ namespace Test.Feature.Kids.Queries
     public class GetAllKidsQueryHandlerTest
     {
         [Fact]
-        public async Task Handle_Should_UpdateKidSuccessfully()
+        public async Task Handle_Should_ReturnAllKidsSuccessfully()
         {
             var kidRepositoryMock = new Mock<IKidRepository>();
 
