@@ -1,20 +1,18 @@
-﻿using BusApi.Data;
+﻿using BusApi.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusApi.Feature.Kids.Commands
 {
     public class UpdateKidCommandHandler : IRequestHandler<UpdateKidCommand, Unit>
     {
-        private readonly ApplicationContext _context;
+        private readonly IKidRepository _kidRepository;
 
-        public UpdateKidCommandHandler(ApplicationContext context) => _context = context;
+        public UpdateKidCommandHandler(IKidRepository kidRepository) => _kidRepository = kidRepository;
 
         public async Task<Unit> Handle(UpdateKidCommand request, CancellationToken cancellationToken)
         {
-            var kid = await _context.Kids
-                .Include(b => b.Bus)
-                .FirstOrDefaultAsync(b => b.Id == request.Id, cancellationToken);
+            var kid = await _kidRepository
+                .GetByIdWithBusAsync(request.Id, cancellationToken);
 
             if (kid == null)
                 throw new Exception($"Kid with Id {request.Id} not found.");
@@ -22,7 +20,7 @@ namespace BusApi.Feature.Kids.Commands
             kid.DocumentNumber = request.DocumentNumber;
             kid.Name = request.Name;
 
-            await _context.SaveChangesAsync(cancellationToken);
+            await _kidRepository.UpdateAsync(kid, cancellationToken);
 
             return Unit.Value;
         }

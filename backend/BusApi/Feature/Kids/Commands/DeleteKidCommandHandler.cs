@@ -1,24 +1,23 @@
-﻿using BusApi.Data;
+﻿using BusApi.Repositories;
 using MediatR;
 
 namespace BusApi.Feature.Kids.Commands
 {
     public class DeleteKidCommandHandler : IRequestHandler<DeleteKidCommand, Unit>
     {
-        private readonly ApplicationContext _context;
+        private readonly IKidRepository _kidRepository;
 
-        public DeleteKidCommandHandler(ApplicationContext context) => _context = context;
+        public DeleteKidCommandHandler(IKidRepository kidRepository) => _kidRepository = kidRepository;
 
         public async Task<Unit> Handle(DeleteKidCommand request, CancellationToken cancellationToken)
         {
-            var kid = await _context.Kids.FindAsync(request.Id);
+            var kid = await _kidRepository.GetByIdAsync(request.Id, cancellationToken);
             if (kid == null)
             {
                 throw new Exception($"Kid with Id {request.Id} not found.");
             }
 
-            _context.Kids.Remove(kid);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _kidRepository.DeleteAsync(kid, cancellationToken);
 
             return Unit.Value;
         }

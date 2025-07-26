@@ -1,21 +1,24 @@
-﻿using BusApi.Data;
-using BusApi.Domain;
+﻿using BusApi.Domain;
+using BusApi.Repositories;
 using MediatR;
 
 namespace BusApi.Feature.Kids.Commands
 {
     public class CreateKidCommandHandler : IRequestHandler<CreateKidCommand, Guid>
     {
-        private readonly ApplicationContext _context;
+        private readonly IKidRepository _kidRepository;
 
-        public CreateKidCommandHandler(ApplicationContext context) => _context = context;
+        public CreateKidCommandHandler(IKidRepository kidRepository) => _kidRepository = kidRepository;
 
         public async Task<Guid> Handle(CreateKidCommand request, CancellationToken cancellationToken)
         {
-            var kid = new Kid { Name = request.Name, DocumentNumber = request.DocumentNumber, BusId = request.BusId };
+            var kid = new Kid
+            {
+                Name = request.Name,
+                DocumentNumber = request.DocumentNumber
+            };
 
-            _context.Kids.Add(kid);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _kidRepository.CreateAsync(kid, cancellationToken);
 
             return kid.Id;
         }
