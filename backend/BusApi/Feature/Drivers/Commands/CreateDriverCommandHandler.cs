@@ -1,22 +1,24 @@
-﻿using BusApi.Data;
-using BusApi.Domain;
+﻿using BusApi.Domain;
+using BusApi.Repositories;
 using MediatR;
 
 namespace BusApi.Feature.Drivers.Commands
 {
     public class CreateDriverCommandHandler : IRequestHandler<CreateDriverCommand, Guid>
     {
-        private readonly ApplicationContext _context;
+        private readonly IDriverRepository _driverRepository;
 
-        public CreateDriverCommandHandler(ApplicationContext context) => _context = context;
+        public CreateDriverCommandHandler(IDriverRepository driverRepository) => _driverRepository = driverRepository;
 
         public async Task<Guid> Handle(CreateDriverCommand request, CancellationToken cancellationToken)
         {
-            var bus = await _context.Buses.FindAsync(request.BusId);
-            var driver = new Driver { DocumentNumber = request.DocumentNumber, Name = request.Name, Bus = bus };
+            var driver = new Driver
+            {
+                DocumentNumber = request.DocumentNumber,
+                Name = request.Name
+            };
 
-            _context.Drivers.Add(driver);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _driverRepository.UpdateAsync(driver, cancellationToken);
 
             return driver.Id;
         }

@@ -1,24 +1,23 @@
-﻿using BusApi.Data;
+﻿using BusApi.Repositories;
 using MediatR;
 
 namespace BusApi.Feature.Drivers.Commands
 {
     public class DeleteDriverCommandHandler : IRequestHandler<DeleteDriverCommand, Unit>
     {
-        private readonly ApplicationContext _context;
+        private readonly IDriverRepository _driverRepository;
 
-        public DeleteDriverCommandHandler(ApplicationContext context) => _context = context;
+        public DeleteDriverCommandHandler(IDriverRepository driverRepository) => _driverRepository = driverRepository;
 
         public async Task<Unit> Handle(DeleteDriverCommand request, CancellationToken cancellationToken)
         {
-            var driver = await _context.Drivers.FindAsync(request.Id);
+            var driver = await _driverRepository.GetByIdAsync(request.Id, cancellationToken);
             if (driver == null)
             {
                 throw new Exception($"Driver with Id {request.Id} not found.");
             }
 
-            _context.Drivers.Remove(driver);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _driverRepository.DeleteAsync(driver, cancellationToken);
 
             return Unit.Value;
         }
