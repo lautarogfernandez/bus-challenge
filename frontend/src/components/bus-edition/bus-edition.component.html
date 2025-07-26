@@ -2,7 +2,7 @@
   <div *ngIf="bus" class="form-card">
     <h2 class="page-title">{{ title }}</h2>
 
-    <form [formGroup]="form" style="width: 300px">
+    <form [formGroup]="form" class="form-container">
       <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Chofer</mat-label>
         <mat-select formControlName="driverId">
