@@ -1,42 +1,46 @@
-
-
-
+################################################################################################################
 # .NET ignores
- 
-*.swp
-*.*~
-project.lock.json
-.DS_Store
-*.pyc
+
+# Temporary files
+backend/**/*.swp
+backend/**/*.*~
+backend/**/project.lock.json
+backend/**/.DS_Store
+backend/**/*.pyc
 
 # Visual Studio Code
-.vscode
+backend/**/.vscode/
 
 # User-specific files
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
+backend/**/*.suo
+backend/**/*.user
+backend/**/*.userosscache
+backend/**/*.sln.docstates
 
-# Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
-msbuild.log
-msbuild.err
-msbuild.wrn
+# Build outputs
+backend/**/[Dd]ebug/
+backend/**/[Dd]ebugPublic/
+backend/**/[Rr]elease/
+backend/**/[Rr]eleases/
+backend/**/x64/
+backend/**/x86/
+backend/**/build/
+backend/**/bld/
+backend/**/[Bb]in/
+backend/**/[Oo]bj/
+backend/**/msbuild.log
+backend/**/msbuild.err
+backend/**/msbuild.wrn
 
-# Visual Studio 2015
-.vs/
+# Visual Studio
+backend/**/.vs/
+
+# Temporary database files
+backend/**/*.db
+backend/**/*.db-wal
 
 
+################################################################################################################
 
 # Angular ignores
 
@@ -85,5 +89,6 @@ msbuild.wrn
 /frontend/.webcontainer/
 /frontend/.esbuild/
 /frontend/node_modules/.cache/
+
 
 
