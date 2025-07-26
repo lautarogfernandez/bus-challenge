@@ -35,3 +35,55 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+
+
+
+# Angular ignores
+
+/frontend/node_modules/
+
+# Angular build outputs
+/frontend/dist/
+/frontend/out-tsc/
+/frontend/.angular/
+/frontend/.tmp/
+/frontend/angular/cache/
+
+# Logs y archivos temporales
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/pnpm-debug.log*
+/frontend/*.log
+
+# Archivos de entorno
+/frontend/.env
+/frontend/.env.local
+/frontend/.env.*.local
+
+# Archivos compilados
+/frontend/**/*.js
+/frontend/**/*.js.map
+
+# Cobertura de tests
+/frontend/coverage/
+
+# Archivos generados por Angular
+/frontend/**/*.ngfactory.*
+/frontend/**/*.ngstyle.*
+/frontend/**/*.ngsummary.*
+
+# IDEs y editores
+/frontend/.vscode/
+/frontend/.idea/
+
+# OS
+/frontend/.DS_Store
+/frontend/Thumbs.db
+
+# Otras herramientas
+/frontend/.webcontainer/
+/frontend/.esbuild/
+/frontend/node_modules/.cache/
+
+
