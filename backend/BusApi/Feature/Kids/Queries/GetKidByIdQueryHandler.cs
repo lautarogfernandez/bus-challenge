@@ -1,21 +1,18 @@
-﻿using BusApi.Data;
-using BusApi.Models;
+﻿using BusApi.Models;
+using BusApi.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusApi.Feature.Kids.Queries
 {
     public class GetKidByIdQueryHandler : IRequestHandler<GetKidByIdQuery, KidListResponse?>
     {
-        private readonly ApplicationContext _context;
+        private readonly IKidRepository _kidRepository;
 
-        public GetKidByIdQueryHandler(ApplicationContext context) => _context = context;
+        public GetKidByIdQueryHandler(IKidRepository kidRepository) => _kidRepository = kidRepository;
 
         public async Task<KidListResponse?> Handle(GetKidByIdQuery request, CancellationToken cancellationToken)
         {
-            var kid = await _context.Kids
-                .Include(b => b.Bus)
-                .FirstOrDefaultAsync(b => b.Id == request.Id, cancellationToken);
+            var kid = await _kidRepository.GetByIdWithBusAsync(request.Id, cancellationToken);
 
             if (kid == null)
                 return null;
