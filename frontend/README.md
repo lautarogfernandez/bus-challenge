@@ -1,4 +1,4 @@
-# Frontend
+# BusApp
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
 
@@ -57,3 +57,9 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+Para hacer build de la imagen, pararse donde está el Dockerfile y correr:
+docker build --no-cache -t busapp-angular .
+
+Para correr la aplicacion, ejecutar:
+docker run -p 5555:4200 --name busapp-angular-container busapp-angular

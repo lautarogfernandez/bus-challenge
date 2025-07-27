@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 1.5em;
+  width: fit-content;
+  margin: 2em auto;
+  background-color: transparent;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-container {
+  width: 400px;
+}

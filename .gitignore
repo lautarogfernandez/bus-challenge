@@ -1,0 +1,94 @@
+################################################################################################################
+# .NET ignores
+
+# Temporary files
+backend/**/*.swp
+backend/**/*.*~
+backend/**/project.lock.json
+backend/**/.DS_Store
+backend/**/*.pyc
+
+# Visual Studio Code
+backend/**/.vscode/
+
+# User-specific files
+backend/**/*.suo
+backend/**/*.user
+backend/**/*.userosscache
+backend/**/*.sln.docstates
+
+# Build outputs
+backend/**/[Dd]ebug/
+backend/**/[Dd]ebugPublic/
+backend/**/[Rr]elease/
+backend/**/[Rr]eleases/
+backend/**/x64/
+backend/**/x86/
+backend/**/build/
+backend/**/bld/
+backend/**/[Bb]in/
+backend/**/[Oo]bj/
+backend/**/msbuild.log
+backend/**/msbuild.err
+backend/**/msbuild.wrn
+
+# Visual Studio
+backend/**/.vs/
+
+# Temporary database files
+backend/**/*.db
+backend/**/*.db-wal
+
+
+################################################################################################################
+
+# Angular ignores
+
+/frontend/node_modules/
+
+# Angular build outputs
+/frontend/dist/
+/frontend/out-tsc/
+/frontend/.angular/
+/frontend/.tmp/
+/frontend/angular/cache/
+
+# Logs y archivos temporales
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/pnpm-debug.log*
+/frontend/*.log
+
+# Archivos de entorno
+/frontend/.env
+/frontend/.env.local
+/frontend/.env.*.local
+
+# Archivos compilados
+/frontend/**/*.js
+/frontend/**/*.js.map
+
+# Cobertura de tests
+/frontend/coverage/
+
+# Archivos generados por Angular
+/frontend/**/*.ngfactory.*
+/frontend/**/*.ngstyle.*
+/frontend/**/*.ngsummary.*
+
+# IDEs y editores
+/frontend/.vscode/
+/frontend/.idea/
+
+# OS
+/frontend/.DS_Store
+/frontend/Thumbs.db
+
+# Otras herramientas
+/frontend/.webcontainer/
+/frontend/.esbuild/
+/frontend/node_modules/.cache/
+
+
+

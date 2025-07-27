@@ -1,0 +1,25 @@
+.top-bar {
+  position: sticky;
+  top: 0;
+  background-color: #212121;
+  color: white;
+  z-index: 1000;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.top-bar-link {
+  color: white !important;
+}
+
+.top-bar-link:hover {
+  color: lightgray !important;
+}
+
+.app-logo {
+  height: 32px;
+  width: auto;
+  margin-right: 8px;
+}

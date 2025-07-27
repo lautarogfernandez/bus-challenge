@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.add-button-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.add-button-label {
+  font-weight: 500;
+}
+
+.add-button {
+  background: #c40c0c;
+  color: white;
+}
+
+.table-header {
+  font-weight: 700;
+  background-color: lightgrey;
+}

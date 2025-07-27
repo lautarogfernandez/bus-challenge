@@ -1,0 +1,57 @@
+<div class="center-container">
+  <div *ngIf="bus" class="form-card">
+    <h2 class="page-title">{{ title }}</h2>
+
+    <form [formGroup]="form" class="form-container">
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Chofer</mat-label>
+        <mat-select formControlName="driverId">
+          <mat-option
+            *ngFor="let driver of drivers"
+            [value]="driver.id"
+            [disabled]="
+              driver.busRegistrationPlate && driver.id !== bus.driverId
+            "
+          >
+            {{ driver.name }} - {{ driver.documentNumber }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get('driverId')?.hasError('required')">
+          Es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Patente</mat-label>
+        <input matInput formControlName="registrationPlate" />
+
+        <mat-error *ngIf="form.get('registrationPlate')?.hasError('required')">
+          Es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="form.get('registrationPlate')?.hasError('maxlength')">
+          No puede tener más de 10 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Chicos</mat-label>
+        <mat-select formControlName="kidIds" multiple>
+          <mat-option *ngFor="let kid of kids" [value]="kid.id">
+            {{ kid.name }} - {{ kid.documentNumber }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <form-buttons
+      [canSave]="form.valid"
+      (cancel)="onCancel()"
+      (save)="onSave()"
+    ></form-buttons>
+  </div>
+</div>
+
+<app-progress-bar [show]="loading && !bus" />
+
+<app-loading-error [show]="!loading && !bus && loadingError" />

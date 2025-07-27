@@ -1,0 +1,18 @@
+<div class="button-group">
+  <button mat-fab extended type="button" (click)="onCancel()" color="primary">
+    <mat-icon>arrow_back</mat-icon>
+    {{ cancelLabel }}
+  </button>
+
+  <button
+    mat-fab
+    extended
+    type="button"
+    [disabled]="!canSave"
+    (click)="onSave()"
+    class="green-button"
+  >
+    <mat-icon>save</mat-icon>
+    {{ saveLabel }}
+  </button>
+</div>

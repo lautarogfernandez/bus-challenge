@@ -1,0 +1,14 @@
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5em;
+}
+
+.green-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.green-button:hover {
+  background-color: #43a047;
+}
