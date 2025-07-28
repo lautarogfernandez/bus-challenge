@@ -1,7 +1,7 @@
 export const API_ROUTES = {
-  BUS: 'bus',
-  DRIVER: 'driver',
-  KID: 'kid',
+  BUS: 'buses',
+  DRIVER: 'drivers',
+  KID: 'kids',
 };
 
 export const ENTITIES = {
