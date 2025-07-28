@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BusApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/kids")]
     public class KidController : ControllerBase
     {
         private readonly ISender _sender;

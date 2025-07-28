@@ -25,7 +25,7 @@ El backend hace uso de varias librerías complementarias para estructurar la sol
 ## Arquitectura del Frontend
 
 El frontend está desarrollado con **Angular**, siguiendo una arquitectura modular basada en componentes y servicios.  
-El manejo de rutas está realizao con **@angular/router**, los formularios está realzados usando **@angular/forms** facilitando la validación y el control de estado y **@angular/material** que provee una base de componentes de UI.
+El manejo de rutas está realizado con **@angular/router**, los formularios está realzados usando **@angular/forms** facilitando la validación y el control de estado y **@angular/material** que provee una base de componentes de UI.
 
 La aplicación está diseñada con principios de separación de responsabilidades:
 
@@ -36,7 +36,7 @@ La aplicación está diseñada con principios de separación de responsabilidade
 
 ## Requisitos previos
 
-Para poder correr la aplicacion, es necesario tener instalados:
+Para poder correr la aplicación, es necesario tener instalados:
 
 - [.NET SDK 9](https://dotnet.microsoft.com/)
 - [Node.js 22+](https://nodejs.org/)
@@ -53,11 +53,18 @@ Para poder correr la aplicacion, es necesario tener instalados:
 
 ```bash
 cd backend
-dotnet restore
-dotnet run
+dotnet restore BusApi.sln
+dotnet build BusApi.sln
+dotnet run --project BusApi/BusApi.csproj
 ```
 
-Corre en: https://localhost:7295
+Corre en: http://localhost:5079
+
+Para ejecutar las pruebas, correr:
+
+```bash
+dotnet test Test/Test.csproj
+```
 
 #### Frontend
 
@@ -95,7 +102,7 @@ Para hacer build de la imagen, pararse donde está el Dockerfile correspondiente
 docker build --no-cache -t busapp-angular .
 ```
 
-Luego, para correr la aplicacion ejecutar:
+Luego, para correr la aplicación ejecutar:
 
 ```bash
 docker run -p 5555:4200 --name busapp-angular-container busapp-angular
@@ -103,19 +110,59 @@ docker run -p 5555:4200 --name busapp-angular-container busapp-angular
 
 Corre en: http://localhost:5555
 
+## Rutas navegables del frontend
+
+La aplicación frontend cuenta con las siguientes rutas navegables:
+
+- `/home` — Página principal o de inicio.
+- `/buses` — Listado de micros.
+- `/buses/{id}` — Detalle o edición de un micro específico, donde `{id}` es el identificador del micro. Si `{id}` es `0`, se interpreta como creación de un nuevo micro.
+- `/drivers` — Listado de choferes.
+- `/drivers/{id}` — Detalle o edición de un chofer específico, con `{id}` como identificador. Si `{id}` es `0`, se interpreta como creación de un nuevo chofer.
+- `/kids` — Listado de chicos.
+- `/kids/{id}` — Detalle o edición de un chico específico, usando `{id}` como identificador. Si `{id}` es `0`, se interpreta como creación de un nuevo chico.
+
+## Endpoints API del backend
+
+El backend expone los siguientes endpoints REST para gestionar micros, choferes y chicos:
+
+### Micros
+
+- `GET api/buses` — Obtiene la lista de micros.
+- `GET api/buses/{id}` — Obtiene un micro específico por su id.
+- `POST api/buses` — Crea un nuevo micro.
+- `PUT api/buses/{id}` — Actualiza un micro existente.
+- `DELETE api/buses/{id}` — Elimina un micro.
+
+### Choferes
+
+- `GET api/drivers` — Obtiene la lista de choferes.
+- `GET api/drivers/{id}` — Obtiene un chofer específico por su id.
+- `POST api/drivers` — Crea un nuevo chofer.
+- `PUT api/drivers/{id}` — Actualiza un chofer existente.
+- `DELETE api/drivers/{id}` — Elimina un chofer.
+
+### Chicos
+
+- `GET api/kids` — Obtiene la lista de chicos.
+- `GET api/kids/{id}` — Obtiene un chico específico por su id.
+- `POST api/kids` — Crea un nuevo chico.
+- `PUT api/kids/{id}` — Actualiza un chico existente.
+- `DELETE api/kids/{id}` — Elimina un chico.
+
 ## Posibles Extensiones
 
 A continuación, quería detallar algunas ideas para extender y mejorar la solución en futuras iteraciones:
 
 - **Sepeación del backend en diferentes proyectos**: Separar las carpetas creadas en proyectos es un pendiente.
 
-- **Agregar logs con Serilog**: Integrar Serilog en el backend como herramiento de logging, facilitando el monitoreo y la trazabilidad de eventos y errores.
+- **Agregar logs con Serilog**: Integrar Serilog en el backend como herramienta de logging, facilitando el monitoreo y la trazabilidad de eventos y errores.
 
 - **Mejorar el formato de los mensajes de error en el frontend**: Aplicar una estructura uniforme para mostrar errores al usuario, con mensajes claros, amigables y útiles, diferenciando errores de validación, del servidor y de red.
 
 - **Refinar el manejo de errores en backend y frontend**: Implementar middlewares de captura global de errores en el backend y estrategias de manejo centralizado en Angular, para garantizar respuestas consistentes y una experiencia de usuario más robusta.
 
-- **Mejorar la muestra de los errores de validacion en los formularios**: Crear componentes para el manejo de la muestra de los errores. Actualmente la lógica está repetida en varios componentes.
+- **Mejorar la muestra de los errores de validación en los formularios**: Crear componentes para el manejo de la muestra de los errores. Actualmente la lógica está repetida en varios componentes.
 
 - **Internacionalización (i18n)**: Adaptar el frontend para soportar múltiples idiomas.
 
