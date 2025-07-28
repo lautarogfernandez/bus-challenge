@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BusApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/drivers")]
     public class DriverController : ControllerBase
     {
         private readonly ISender _sender;
