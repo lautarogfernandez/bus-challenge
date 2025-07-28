@@ -110,6 +110,46 @@ docker run -p 5555:4200 --name busapp-angular-container busapp-angular
 
 Corre en: http://localhost:5555
 
+## Rutas navegables del frontend
+
+La aplicación frontend cuenta con las siguientes rutas navegables:
+
+- `/home` — Página principal o de inicio.
+- `/buses` — Listado de micros.
+- `/buses/{id}` — Detalle o edición de un micro específico, donde `{id}` es el identificador del micro. Si `{id}` es `0`, se interpreta como creación de un nuevo micro.
+- `/drivers` — Listado de choferes.
+- `/drivers/{id}` — Detalle o edición de un chofer específico, con `{id}` como identificador. Si `{id}` es `0`, se interpreta como creación de un nuevo chofer.
+- `/kids` — Listado de chicos.
+- `/kids/{id}` — Detalle o edición de un chico específico, usando `{id}` como identificador. Si `{id}` es `0`, se interpreta como creación de un nuevo chico.
+
+## Endpoints API del backend
+
+El backend expone los siguientes endpoints REST para gestionar micros, choferes y chicos:
+
+### Micros
+
+- `GET api/buses` — Obtiene la lista de micros.
+- `GET api/buses/{id}` — Obtiene un micro específico por su id.
+- `POST api/buses` — Crea un nuevo micro.
+- `PUT api/buses/{id}` — Actualiza un micro existente.
+- `DELETE api/buses/{id}` — Elimina un micro.
+
+### Choferes
+
+- `GET api/drivers` — Obtiene la lista de choferes.
+- `GET api/drivers/{id}` — Obtiene un chofer específico por su id.
+- `POST api/drivers` — Crea un nuevo chofer.
+- `PUT api/drivers/{id}` — Actualiza un chofer existente.
+- `DELETE api/drivers/{id}` — Elimina un chofer.
+
+### Chicos
+
+- `GET api/kids` — Obtiene la lista de chicos.
+- `GET api/kids/{id}` — Obtiene un chico específico por su id.
+- `POST api/kids` — Crea un nuevo chico.
+- `PUT api/kids/{id}` — Actualiza un chico existente.
+- `DELETE api/kids/{id}` — Elimina un chico.
+
 ## Posibles Extensiones
 
 A continuación, quería detallar algunas ideas para extender y mejorar la solución en futuras iteraciones:
